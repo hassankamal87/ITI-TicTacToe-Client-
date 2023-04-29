@@ -125,7 +125,7 @@ public class MainScreenUiController implements Initializable {
     private void signUpHandler(ActionEvent event) {
         try {
             System.out.println(PickYourSideScreenController.getMode() + "");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../XML SignUP Screen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUPScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) signInBtn.getScene().getWindow();
