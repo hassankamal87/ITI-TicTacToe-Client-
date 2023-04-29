@@ -18,10 +18,10 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         
-          Parent root = FXMLLoader.load(getClass().getResource("XML SignIn Screen.fxml"));
+          Parent root = FXMLLoader.load(getClass().getResource("XML/PickYourSideScreen.fxml"));
         
         
-        Scene scene = new Scene(root, 465, 380);
+        Scene scene = new Scene(root, 600, 400);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
