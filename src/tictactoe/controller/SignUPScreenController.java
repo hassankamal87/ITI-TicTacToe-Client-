@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.XML;
+package tictactoe.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,29 +58,22 @@ public class SignUPScreenController implements Initializable {
     }
 
     @FXML
-    private void backHandler(ActionEvent event) {
-        try {
+    private void backHandler(ActionEvent event) throws IOException {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) backBtn.getScene().getWindow();
             stage.setScene(scene);
-        } catch (IOException ex) {
-            Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @FXML
-    private void mainManuHandler(ActionEvent event) {
-        try {
+    private void mainManuHandler(ActionEvent event) throws IOException {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreenUi.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) backBtn.getScene().getWindow();
             stage.setScene(scene);
-        } catch (IOException ex) {
-            Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
     }
-    
 }
