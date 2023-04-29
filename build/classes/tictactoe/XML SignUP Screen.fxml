@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.XMLSignUPScreenController">
+   <children>
+      <TextField layoutX="120.0" layoutY="165.0" prefHeight="25.0" prefWidth="225.0" promptText="Password" />
+      <TextField layoutX="120.0" layoutY="201.0" prefHeight="25.0" prefWidth="225.0" promptText="Confirm Password" />
+      <Button layoutX="120.0" layoutY="246.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Sign Up" />
+      <Button layoutX="26.0" layoutY="308.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="390.0" AnchorPane.topAnchor="310.0" />
+      <TextField layoutX="120.0" layoutY="128.0" prefHeight="25.0" prefWidth="225.0" promptText="Email" />
+      <TextField layoutX="120.0" layoutY="93.0" prefHeight="25.0" prefWidth="225.0" promptText="User Name" />
+      <Button layoutX="255.0" layoutY="246.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Main Manu" />
+   </children>
+</AnchorPane>

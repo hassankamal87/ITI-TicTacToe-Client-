@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="120.0" layoutY="118.0" prefHeight="25.0" prefWidth="225.0" promptText="Password" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="165.0" />
+      <TextField layoutX="120.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="User Name" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="120.0" />
+      <Button layoutX="203.0" layoutY="204.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Sign In" AnchorPane.bottomAnchor="145.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="205.0" />
+      <Button layoutX="26.0" layoutY="308.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="390.0" AnchorPane.topAnchor="310.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/Background.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="#b45f06" layoutX="364.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WHICH" wrappingWidth="157.0">
+         <font>
+            <Font name="Cooper Black" size="38.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="121.0" fitWidth="143.0" layoutX="304.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
+         <image>
+            <Image url="@../assets/x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="92.0" layoutX="399.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/v_line.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="oImg" fitHeight="121.0" fitWidth="113.0" layoutX="486.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/o.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="backImg" fitHeight="69.0" fitWidth="77.0" layoutX="14.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/back.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
