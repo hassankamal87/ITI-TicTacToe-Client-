@@ -1,9 +1,12 @@
 
 package tictactoe;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -13,15 +16,12 @@ import javafx.stage.Stage;
 public class TicTacToe extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-        System.out.println("hassan");
-        System.out.println("Mohamed Adel");
-        System.out.println("Danash");
-        System.out.println("Shimaa");
-        StackPane root = new StackPane();
+    public void start(Stage primaryStage) throws Exception {
+        
+          Parent root = FXMLLoader.load(getClass().getResource("XML SignIn Screen.fxml"));
         
         
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 465, 380);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
