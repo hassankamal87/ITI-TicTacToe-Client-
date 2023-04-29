@@ -14,7 +14,7 @@
             <Image url="@assets/Background.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="238.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #f4a460;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="238.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #f4a460;" text="Sign In" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
