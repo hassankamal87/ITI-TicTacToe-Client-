@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.XML.PickYourSideScreenController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,7 +33,7 @@
             <Image url="@../assets/o.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="backImg" fitHeight="69.0" fitWidth="77.0" layoutX="14.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backImg" fitHeight="69.0" fitWidth="77.0" layoutX="14.0" layoutY="323.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/back.png" />
          </image>

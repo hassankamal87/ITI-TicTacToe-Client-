@@ -38,7 +38,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="localBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="180.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
+      <Button fx:id="localBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="180.0" mnemonicParsing="false" onAction="#playlocal" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
          <graphic>
             <HBox alignment="CENTER" prefHeight="31.0" prefWidth="78.0">
                <children>
