@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.SplashScreenController">
+   <children>
+      <ImageView fx:id="backGroundImg" fitHeight="410.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/splash.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="oImg" fitHeight="150.0" fitWidth="200.0" layoutX="460.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/o.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
+         <image>
+            <Image url="@../assets/x.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="comeLabel" layoutX="288.0" layoutY="212.0" text="COME" textFill="#660000">
+         <font>
+            <Font name="Segoe UI Black" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="welLabel" layoutX="223.0" layoutY="212.0" text="WEL" textFill="#b45f06">
+         <font>
+            <Font name="Segoe UI Black" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="loadingLabel" layoutX="268.0" layoutY="254.0" text="Loading ..." textFill="#fcfcfc">
+         <font>
+            <Font name="Consolas Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
