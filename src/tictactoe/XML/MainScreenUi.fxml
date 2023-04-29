@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.XML.MainScreenUiController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.XML.MainScreenUiController">
    <children>
-      <ImageView fitHeight="412.0" fitWidth="637.0" pickOnBounds="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/Background.jpg" />
          </image>
@@ -79,7 +79,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="490.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -100,7 +100,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="497.0" layoutY="56.0" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="490.0" layoutY="56.0" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -110,7 +110,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="logoutBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="497.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #BF0404;" textAlignment="CENTER" textFill="WHITE" visible="false">
+      <Button fx:id="logoutBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="490.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #BF0404;" textAlignment="CENTER" textFill="WHITE" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
