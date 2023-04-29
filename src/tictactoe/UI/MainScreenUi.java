@@ -1,4 +1,4 @@
-package tictactoe;
+package tictactoe.Ui;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -40,7 +40,6 @@ public class MainScreenUi extends AnchorPane {
     protected final Text text4;
     protected final Text text5;
     private Stage primaryStage;
-
     public MainScreenUi(Stage primaryStage) {
         this.primaryStage = primaryStage;
         imageView = new ImageView();
@@ -79,7 +78,7 @@ public class MainScreenUi extends AnchorPane {
         imageView.setFitHeight(412.0);
         imageView.setFitWidth(637.0);
         imageView.setPickOnBounds(true);
-        imageView.setImage(new Image(getClass().getResource("assets/Background.jpg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("../assets/Background.jpg").toExternalForm()));
 
         computerBtn.setAlignment(javafx.geometry.Pos.CENTER);
         computerBtn.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
@@ -99,7 +98,7 @@ public class MainScreenUi extends AnchorPane {
         imageView0.setFitWidth(60.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("assets/user_icon.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("../assets/user_icon.png").toExternalForm()));
 
         text.setFill(javafx.scene.paint.Color.WHITE);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
@@ -113,7 +112,7 @@ public class MainScreenUi extends AnchorPane {
         imageView1.setFitWidth(39.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("assets/computer_icon.png").toExternalForm()));
+        imageView1.setImage(new Image(getClass().getResource("../assets/computer_icon.png").toExternalForm()));
         computerBtn.setGraphic(hBox);
 
         localBtn.setAlignment(javafx.geometry.Pos.CENTER);
@@ -134,7 +133,7 @@ public class MainScreenUi extends AnchorPane {
         imageView2.setFitWidth(60.0);
         imageView2.setPickOnBounds(true);
         imageView2.setPreserveRatio(true);
-        imageView2.setImage(new Image(getClass().getResource("assets/user_icon.png").toExternalForm()));
+        imageView2.setImage(new Image(getClass().getResource("../assets/user_icon.png").toExternalForm()));
 
         text0.setFill(javafx.scene.paint.Color.WHITE);
         text0.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
@@ -148,7 +147,7 @@ public class MainScreenUi extends AnchorPane {
         imageView3.setFitWidth(39.0);
         imageView3.setPickOnBounds(true);
         imageView3.setPreserveRatio(true);
-        imageView3.setImage(new Image(getClass().getResource("assets/user_icon.png").toExternalForm()));
+        imageView3.setImage(new Image(getClass().getResource("../assets/user_icon.png").toExternalForm()));
         localBtn.setGraphic(hBox0);
 
         onlineBtn.setAlignment(javafx.geometry.Pos.CENTER);
@@ -170,7 +169,7 @@ public class MainScreenUi extends AnchorPane {
         imageView4.setFitWidth(60.0);
         imageView4.setPickOnBounds(true);
         imageView4.setPreserveRatio(true);
-        imageView4.setImage(new Image(getClass().getResource("assets/online_network_icon.png").toExternalForm()));
+        imageView4.setImage(new Image(getClass().getResource("../assets/online_network_icon.png").toExternalForm()));
 
         text1.setFill(javafx.scene.paint.Color.WHITE);
         text1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
@@ -202,7 +201,7 @@ public class MainScreenUi extends AnchorPane {
         imageView5.setFitWidth(19.0);
         imageView5.setPickOnBounds(true);
         imageView5.setPreserveRatio(true);
-        imageView5.setImage(new Image(getClass().getResource("assets/sign_in_icon.png").toExternalForm()));
+        imageView5.setImage(new Image(getClass().getResource("../assets/sign_in_icon.png").toExternalForm()));
 
         text2.setFill(javafx.scene.paint.Color.WHITE);
         text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
@@ -262,7 +261,7 @@ public class MainScreenUi extends AnchorPane {
         imageView6.setFitWidth(22.0);
         imageView6.setPickOnBounds(true);
         imageView6.setPreserveRatio(true);
-        imageView6.setImage(new Image(getClass().getResource("assets/log_out_icon.png").toExternalForm()));
+        imageView6.setImage(new Image(getClass().getResource("../assets/log_out_icon.png").toExternalForm()));
 
         text3.setDisable(true);
         text3.setFill(javafx.scene.paint.Color.WHITE);
@@ -324,90 +323,6 @@ public class MainScreenUi extends AnchorPane {
         getChildren().add(UsernameTxt);
         getChildren().add(text4);
         getChildren().add(text5);
-        
-        
-        
-        //changing scene
-//        computerBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                ChooseSideScreen root = new ChooseSideScreen(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
-
-
-        //changing scene
-//        localBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                Destenation root = new Destenation(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
-
-
-
-//        onlineBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                Destenation root = new Destenation(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
-
-
-        //changing scene
-//        signInBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                Destenation root = new Destenation(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
-
-
-        //changing scene
-//        signUpBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                Destenation root = new Destenation(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
-
-
-//        logOutBtn.addEventHandler(ActionEvent.ACTION,
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event
-//            ) {
-//                Destenation root = new Destenation(primaryStage); // destenation root
-//                Scene scene = new Scene(root, 600, 500);
-//                primaryStage.setScene(scene);
-//            }
-//        }
-//        );
 
     }
 }
