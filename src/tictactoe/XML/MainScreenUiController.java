@@ -8,6 +8,8 @@ package tictactoe.XML;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -62,24 +64,79 @@ public class MainScreenUiController implements Initializable {
     }
 
     @FXML
-    private void playWithComputer(ActionEvent event) throws IOException {
+    private void playWithComputer(ActionEvent event) {
         PickYourSideScreenController.setMode(PickYourSideScreenController.COMPUTER_MODE);
         gotoPickSide();
     }
 
     @FXML
-    private void playlocal(ActionEvent event) throws IOException {
+    private void playlocal(ActionEvent event) {
         PickYourSideScreenController.setMode(PickYourSideScreenController.LOCAL_MODE);
         gotoPickSide();
     }
 
-    private void gotoPickSide() throws IOException {
-        System.out.println(PickYourSideScreenController.getMode()+"");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PickYourSideScreen.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) computerBtn.getScene().getWindow();
-        stage.setScene(scene);
+//    @FXML
+//    private void signUpHandler(ActionEvent event) throws IOException {
+//        System.out.println(PickYourSideScreenController.getMode() + "");
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../XML SignUP Screen.fxml"));
+//        Parent root = loader.load();
+//        Scene scene = new Scene(root);
+//        Stage stage = (Stage) signUpBtn.getScene().getWindow();
+//        stage.setScene(scene);
+//    }
+//    @FXML
+//    private void signInHandler(ActionEvent event) throws IOException {
+//        System.out.println(PickYourSideScreenController.getMode() + "");
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInScreen.fxml"));
+//        Parent root = loader.load();
+//        Scene scene = new Scene(root);
+//        Stage stage = (Stage) signInBtn.getScene().getWindow();
+//        stage.setScene(scene);
+//    }
+    private void gotoPickSide() {
+        try {
+            System.out.println(PickYourSideScreenController.getMode() + "");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PickYourSideScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) computerBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void signInHandler(ActionEvent event) {
+
+        try {
+            System.out.println(PickYourSideScreenController.getMode() + "");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) signInBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void signUpHandler(ActionEvent event) {
+        try {
+            System.out.println(PickYourSideScreenController.getMode() + "");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../XML SignUP Screen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) signInBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void historyHandler(ActionEvent event) {
     }
 
 }
