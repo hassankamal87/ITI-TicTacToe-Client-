@@ -53,7 +53,7 @@ public class SignInScreenController implements Initializable {
     @FXML
     private void backHandler(ActionEvent event) throws IOException {
         
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) backBtn.getScene().getWindow();
