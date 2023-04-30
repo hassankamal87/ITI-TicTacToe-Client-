@@ -30,7 +30,7 @@ public class TicTacToe extends Application {
         Scene splashScene = new Scene(splashRoot, 600, 400);
         Scene mainScene = new Scene(mainRoot, 600, 400);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("TicTacToe");
         primaryStage.setScene(splashScene);
         primaryStage.setResizable(false);
         primaryStage.show();
