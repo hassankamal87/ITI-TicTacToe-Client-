@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.XML;
+package tictactoe.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -96,7 +96,7 @@ public class MainScreenUiController implements Initializable {
     private void gotoPickSide() {
         try {
             System.out.println(PickYourSideScreenController.getMode() + "");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PickYourSideScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/PickYourSideScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) computerBtn.getScene().getWindow();
@@ -111,7 +111,7 @@ public class MainScreenUiController implements Initializable {
 
         try {
             System.out.println(PickYourSideScreenController.getMode() + "");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) signInBtn.getScene().getWindow();
@@ -125,10 +125,10 @@ public class MainScreenUiController implements Initializable {
     private void signUpHandler(ActionEvent event) {
         try {
             System.out.println(PickYourSideScreenController.getMode() + "");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUPScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignUPScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) signInBtn.getScene().getWindow();
+            Stage stage = (Stage) signUpBtn.getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenUiController.class.getName()).log(Level.SEVERE, null, ex);

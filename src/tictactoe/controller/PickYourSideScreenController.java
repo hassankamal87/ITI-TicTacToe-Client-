@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.XML;
+package tictactoe.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class PickYourSideScreenController implements Initializable {
 
     @FXML
     private void backToMain(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreenUi.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = (Stage) backImg.getScene().getWindow();

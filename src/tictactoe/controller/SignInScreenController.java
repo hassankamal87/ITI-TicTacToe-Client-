@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.XML;
+package tictactoe.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,22 +26,16 @@ import javafx.stage.Stage;
  *
  * @author WIN 10
  */
-public class SignUPScreenController implements Initializable {
+public class SignInScreenController implements Initializable {
 
     @FXML
-    private Button signUpBtnUp;
+    private Button signInBtn;
     @FXML
     private ImageView backBtn;
     @FXML
-    private TextField confirmPasswordTextField;
+    private TextField passwordTextField;
     @FXML
-    private TextField passwordTextFieldUp;
-    @FXML
-    private TextField emailTextField;
-    @FXML
-    private TextField userNameTextFieldUp;
-    @FXML
-    private Button mainManuBtn;
+    private TextField userNameTextField;
 
     /**
      * Initializes the controller class.
@@ -52,28 +46,18 @@ public class SignUPScreenController implements Initializable {
     }    
 
     @FXML
-    private void signUpHandler(ActionEvent event) {
-        /*connect to database*/
-        
+    private void signInHandler(ActionEvent event) {
+          /*connect to database*/
     }
 
     @FXML
     private void backHandler(ActionEvent event) throws IOException {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInScreen.fxml"));
+        
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) backBtn.getScene().getWindow();
             stage.setScene(scene);
     }
-
-    @FXML
-    private void mainManuHandler(ActionEvent event) throws IOException {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreenUi.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) backBtn.getScene().getWindow();
-            stage.setScene(scene);
-    }
+    
 }
