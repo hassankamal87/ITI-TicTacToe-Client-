@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  *
  * @author Mohamed Adel
  */
-public class OnlineFriendListScreenController implements Initializable {
+public class GameHistoryScreenController implements Initializable {
 
     @FXML
     private ListView<?> listItemHolder;
@@ -38,12 +38,13 @@ public class OnlineFriendListScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO
         try {
             // TODO
             
             ArrayList<Node> list = new ArrayList();
             for(int i = 0 ; i < 30 ; i++){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineItemHolder.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/HistoryItemHolder.fxml"));
                 Node node = loader.load();
                 list.add(node);
             }

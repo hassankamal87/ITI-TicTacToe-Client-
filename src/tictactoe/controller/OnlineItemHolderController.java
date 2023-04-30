@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
  *
  * @author Mohamed Adel
  */
-public class ItemHolerController implements Initializable {
+public class OnlineItemHolderController implements Initializable {
 
     @FXML
     private Label playerName;
