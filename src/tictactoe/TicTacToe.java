@@ -32,6 +32,7 @@ public class TicTacToe extends Application {
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(splashScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         
         endSplashScreen(primaryStage, splashRoot,mainScene);

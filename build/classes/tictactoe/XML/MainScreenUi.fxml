@@ -61,7 +61,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="onlineBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="336.0" layoutY="240.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
+      <Button fx:id="onlineBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="240.0" mnemonicParsing="false" onMousePressed="#checkMousePressed" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
          <graphic>
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="241.0">
                <children>
