@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.SplashScreenController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.SplashScreenController">
    <children>
-      <ImageView fx:id="backGroundImg" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backGroundImg" fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/splash.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="oImg" fitHeight="150.0" fitWidth="200.0" layoutX="450.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="oImg" fitHeight="150.0" fitWidth="150.0" layoutX="448.0" layoutY="61.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/o.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
+      <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="62.0" pickOnBounds="true" fx:id="xImg">
          <image>
             <Image url="@../assets/x.png" />
          </image>
