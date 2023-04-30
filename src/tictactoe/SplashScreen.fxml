@@ -10,17 +10,17 @@
    <children>
       <ImageView fx:id="backGroundImg" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/splash.jpg" />
+            <Image url="@assets/splash.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="oImg" fitHeight="150.0" fitWidth="200.0" layoutX="450.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/o.png" />
+            <Image url="@assets/o.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
          <image>
-            <Image url="@../assets/x.png" />
+            <Image url="@assets/x.png" />
          </image>
       </ImageView>
       <Label fx:id="comeLabel" layoutX="288.0" layoutY="212.0" text="COME" textFill="#660000">

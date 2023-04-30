@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.controller;
+package tictactoe.XML;
 
 import java.io.IOException;
 import java.net.URL;

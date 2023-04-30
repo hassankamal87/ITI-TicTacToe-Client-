@@ -23,7 +23,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         
-        Parent splashRoot = FXMLLoader.load(getClass().getResource("XML/SplashScreen.fxml"));
+        Parent splashRoot = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Parent mainRoot = FXMLLoader.load(getClass().getResource("XML/MainScreenUi.fxml"));
         
         
