@@ -22,6 +22,8 @@ public class HistoryItemHolderController implements Initializable {
     @FXML
     private Label playerName;
 
+    public HistoryItemHolderController() {
+    }
     /**
      * Initializes the controller class.
      */
