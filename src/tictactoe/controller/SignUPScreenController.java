@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -33,15 +34,13 @@ public class SignUPScreenController implements Initializable {
     @FXML
     private ImageView backBtn;
     @FXML
-    private TextField confirmPasswordTextField;
-    @FXML
-    private TextField passwordTextFieldUp;
-    @FXML
-    private TextField emailTextField;
+    private PasswordField passwordTextFieldUp;
     @FXML
     private TextField userNameTextFieldUp;
     @FXML
     private Button mainManuBtn;
+    @FXML
+    private PasswordField passwordConTextFieldUp;
 
     /**
      * Initializes the controller class.
