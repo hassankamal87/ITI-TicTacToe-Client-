@@ -15,7 +15,7 @@
             <Image url="@../assets/Background2.png" />
          </image>
       </ImageView>
-      <BorderPane prefHeight="400.0" prefWidth="600.0">
+      <BorderPane layoutX="14.0" prefHeight="410.0" prefWidth="610.0">
          <bottom>
             <AnchorPane prefHeight="56.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
