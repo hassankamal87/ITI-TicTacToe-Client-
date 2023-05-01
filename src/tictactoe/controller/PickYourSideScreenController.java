@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tictactoe.utility.GameLevel;
+import tictactoe.utility.GameMode;
 import tictactoe.utility.PlayerSympol;
 
 /**
@@ -59,11 +60,25 @@ public class PickYourSideScreenController implements Initializable {
     }
 
     @FXML
-    private void setXAndNavigate(MouseEvent event) {
+    private void setXAndNavigate(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+        Parent gameRoot = loader.load();
+        GameScreenController gameController = new GameScreenController(GameMode.computer , PlayerSympol.X);
+        loader.setController(gameController);
+        Scene gameScene = new Scene(gameRoot, 600, 400);
+        Stage stage = (Stage) xImg.getScene().getWindow();
+        stage.setScene(gameScene);
     }
 
     @FXML
-    private void setOAndNavigate(MouseEvent event) {
+    private void setOAndNavigate(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+        Parent gameRoot = loader.load();
+        GameScreenController gameController = new GameScreenController(GameMode.computer , PlayerSympol.O);
+        loader.setController(gameController);
+        Scene gameScene = new Scene(gameRoot, 600, 400);
+        Stage stage = (Stage) xImg.getScene().getWindow();
+        stage.setScene(gameScene);
     }
     
 

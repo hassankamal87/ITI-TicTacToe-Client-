@@ -83,6 +83,7 @@ public class GameScreenController implements Initializable {
     private Stage primaryStage;
     private GameMode gameMode;
     private PlayerSympol playerSympol;
+    private boolean wonFlag = false;
     
     
     public GameScreenController(){
@@ -131,13 +132,13 @@ public class GameScreenController implements Initializable {
         listOfButtons.add(b22);
         
         if(gameMode == GameMode.computer){
-            
+            System.out.println("computer");
         }else if(gameMode == GameMode.multiply){
-            
+            System.out.println("multiply");
             multiplayerMode();
             
         }else if(gameMode == GameMode.online){
-        
+            System.out.println("online");
         }
     }
 
@@ -273,6 +274,7 @@ public class GameScreenController implements Initializable {
                 alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
                 alert.show();
                 freezeButton();
+                wonFlag = true;
             }
         }
 
@@ -281,6 +283,7 @@ public class GameScreenController implements Initializable {
                 alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
                 alert.show();
                 freezeButton();
+                wonFlag = true;
             }
         }
 
@@ -288,12 +291,18 @@ public class GameScreenController implements Initializable {
             alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
             alert.show();
             freezeButton();
+            wonFlag = true;
         }
 
         if(listOfButtons.get(2).getText() == listOfButtons.get(4).getText() && listOfButtons.get(2).getText() == listOfButtons.get(6).getText() && listOfButtons.get(2).getText() != ""){
             alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
             alert.show();
             freezeButton();
+            wonFlag = true;
+        }
+        if(currentNumber == 10 && !wonFlag){
+            alert.setContentText("Draw");
+            alert.show();
         }
     }
      
