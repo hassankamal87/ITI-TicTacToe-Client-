@@ -330,3 +330,24 @@ public class GameScreenController implements Initializable {
     loader.setController(gameScreenController);
     Scene gameScene = new Scene(gameRoot, 600, 400);
 */
+
+/*
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == GameScreenController.class) {
+                    return new GameScreenController(GameMode.multiply );
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        Parent gameRoot = loader.load();
+
+        Scene gameScene = new Scene(gameRoot, 600, 400);
+*/
