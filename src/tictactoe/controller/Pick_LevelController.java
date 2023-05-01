@@ -52,7 +52,7 @@ private boolean animationPlusFlag = true;
         
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,610,410);
             Stage stage = (Stage) Easy.getScene().getWindow();
             stage.setScene(scene);
     }       
@@ -95,7 +95,7 @@ private  void HardMode(ActionEvent event) {
     private void BackHandller(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/PickYourSideScreen.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,610,410);
        Stage stage = (Stage) Back.getScene().getWindow();
         stage.setScene(scene);
     }

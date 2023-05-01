@@ -62,7 +62,7 @@ public class OnlineFriendListScreenController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,610,410);
             Stage stage = (Stage) listItemHolder.getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException ex) {

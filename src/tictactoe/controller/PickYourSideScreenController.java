@@ -65,7 +65,7 @@ public class PickYourSideScreenController implements Initializable {
         Parent gameRoot = loader.load();
         GameScreenController gameController = new GameScreenController(GameMode.computer , PlayerSympol.X);
         loader.setController(gameController);
-        Scene gameScene = new Scene(gameRoot, 600, 400);
+        Scene gameScene = new Scene(gameRoot, 610, 410);
         Stage stage = (Stage) xImg.getScene().getWindow();
         stage.setScene(gameScene);
     }
@@ -76,7 +76,7 @@ public class PickYourSideScreenController implements Initializable {
         Parent gameRoot = loader.load();
         GameScreenController gameController = new GameScreenController(GameMode.computer , PlayerSympol.O);
         loader.setController(gameController);
-        Scene gameScene = new Scene(gameRoot, 600, 400);
+        Scene gameScene = new Scene(gameRoot, 610, 410);
         Stage stage = (Stage) xImg.getScene().getWindow();
         stage.setScene(gameScene);
     }

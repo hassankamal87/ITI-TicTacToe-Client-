@@ -43,7 +43,7 @@ public class ServerMainScreenController implements Initializable {
         
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/PlayerGraphScreen.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,610,410);
             Stage stage = (Stage) playerStatusBtn.getScene().getWindow();
             stage.setScene(scene);
     }

@@ -134,7 +134,6 @@ public class GameScreenController implements Initializable {
         if(gameMode == GameMode.computer){
             System.out.println("computer");
         }else if(gameMode == GameMode.multiply){
-            System.out.println("multiply");
             multiplayerMode();
             
         }else if(gameMode == GameMode.online){
@@ -148,7 +147,7 @@ public class GameScreenController implements Initializable {
         primaryStage = (Stage) quitBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent mainRoot = loader.load();
-        Scene mainScene = new Scene(mainRoot);
+        Scene mainScene = new Scene(mainRoot,610,410);
         primaryStage.setScene(mainScene);
         
        /* primaryStage = (Stage) quitBtn.getScene().getWindow();
