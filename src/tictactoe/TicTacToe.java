@@ -25,25 +25,18 @@ public class TicTacToe extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         Parent splashRoot = FXMLLoader.load(getClass().getResource("XML/SplashScreen.fxml"));
-        //Parent mainRoot = FXMLLoader.load(getClass().getResource("XML/MainScreenUi.fxml"));
-        
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
-        Parent gameRoot = loader.load();
-        GameScreenController gameScreenController = new GameScreenController();
-        loader.setController(gameScreenController);
-        Scene gameScene = new Scene(gameRoot, 600, 400);
+        Parent mainRoot = FXMLLoader.load(getClass().getResource("XML/MainScreenUi.fxml"));
         
         
         Scene splashScene = new Scene(splashRoot, 600, 400);
-        //Scene mainScene = new Scene(gameRoot, 600, 400);
+        Scene mainScene = new Scene(mainRoot, 600, 400);
         
         primaryStage.setTitle("TicTacToe");
         primaryStage.setScene(splashScene);
         primaryStage.setResizable(false);
         primaryStage.show();
         
-        endSplashScreen(primaryStage, splashRoot,gameScene);
+        endSplashScreen(primaryStage, splashRoot,mainScene);
         
     }
 
