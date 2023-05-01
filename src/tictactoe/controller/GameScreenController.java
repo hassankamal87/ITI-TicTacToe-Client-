@@ -24,6 +24,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.utility.GameMode;
+import tictactoe.utility.PlayerSympol;
 
 /**
  * FXML Controller class
@@ -31,8 +33,6 @@ import javafx.stage.Stage;
  * @author AB
  */
 
-enum GameMode{computer, multiply, online}
-enum PlayerSympol{X, O}
 public class GameScreenController implements Initializable {
     
     @FXML

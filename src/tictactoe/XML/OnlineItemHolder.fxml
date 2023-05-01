@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="45.0" prefWidth="284.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.OnlineItemHolderController">
+<AnchorPane id="AnchorPane" prefHeight="45.0" prefWidth="284.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.OnlineItemHolderController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="400.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="410.0">
          <children>
             <Label fx:id="playerName" prefHeight="24.0" prefWidth="131.0" text="Player Name" textFill="#b45f06">
                <HBox.margin>
-                  <Insets left="5.0" right="150.0" />
+                  <Insets left="5.0" right="160.0" />
                </HBox.margin>
                <font>
                   <Font name="Cooper Black" size="20.0" />

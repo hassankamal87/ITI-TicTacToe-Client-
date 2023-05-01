@@ -16,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import tictactoe.utility.GameLevel;
+import tictactoe.utility.PlayerSympol;
 
 /**
  * FXML Controller class
@@ -23,16 +25,16 @@ import javafx.stage.Stage;
  * @author Mohamed Adel
  */
 public class PickYourSideScreenController implements Initializable {
-    public static int COMPUTER_MODE = 0;
-    public static int LOCAL_MODE = 1;
-    private static int gameMode;
+
     @FXML
     private ImageView xImg;
     @FXML
     private ImageView oImg;
     @FXML
     private ImageView backImg;
-
+    
+    private PlayerSympol symbol;
+    private GameLevel level;
     /**
      * Initializes the controller class.
      */
@@ -41,6 +43,12 @@ public class PickYourSideScreenController implements Initializable {
         // TODO
     }    
 
+    //I didn't create an empty constructor because it gonna be used only in computer mode.
+    public PickYourSideScreenController(GameLevel level) {
+        this.symbol = symbol;
+        this.level = level;
+    }
+ 
     @FXML
     private void backToMain(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
@@ -49,12 +57,15 @@ public class PickYourSideScreenController implements Initializable {
         Stage stage = (Stage) backImg.getScene().getWindow();
         stage.setScene(scene);
     }
+
+    @FXML
+    private void setXAndNavigate(MouseEvent event) {
+    }
+
+    @FXML
+    private void setOAndNavigate(MouseEvent event) {
+    }
     
-    public static void setMode(int mode){
-        gameMode = mode;
-    }
-    public static int getMode(){
-        return gameMode;
-    }
+
     
 }
