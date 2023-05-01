@@ -30,8 +30,11 @@ import javafx.stage.Stage;
  *
  * @author AB
  */
-public class GameScreenController implements Initializable {
 
+enum GameMode{computer, multiply, online}
+enum PlayerSympol{X, O}
+public class GameScreenController implements Initializable {
+    
     @FXML
     private ImageView backGroundImg;
     @FXML
@@ -59,53 +62,64 @@ public class GameScreenController implements Initializable {
     @FXML
     private Button b22;
     @FXML
-    private ImageView brownPerson;
+    private ImageView leftIcon;
     @FXML
     private Text leftName;
     @FXML
     private Text leftNumber;
     @FXML
-    private ImageView redPerson;
+    private ImageView rightIcon;
     @FXML
     private Text rightName;
     @FXML
     private Text rightNumber;
     
-    final static int COMPUTER_MODE = 1;
-    final static int MULTIPLAYER_MODE = 2;
-    final static int ONLINE_MODE = 3;
-    
-    Image xImg = new Image("tictactoe/assets/xBoard.png");
-    Image oImg = new Image("tictactoe/assets/oBoard.png");
-    
-    private static int playMode = 1;
-    private int currentShapeToDraw = 1;
-    
-    private ArrayList<Button> listOfButtons ;
+    private ArrayList<Button> listOfButtons;
     Alert alert;
-
-     @FXML
-    private void onQuitOrWithdrawPressed(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
-            Parent mainRoot = loader.load();
-            Scene mainScene = new Scene(mainRoot);
-            Stage primaryStage = (Stage) quitBtn.getScene().getWindow();
-            primaryStage.setScene(mainScene);
-        } catch (IOException ex) {
-            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    Image xImg;
+    Image oImg;
+    private int currentNumber;
+    
+    private Stage primaryStage;
+    private GameMode gameMode;
+    private PlayerSympol playerSympol;
     
     
-    public static void setMode(int gameMode){
-        playMode = gameMode;
-    }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public GameScreenController(){
+        gameMode = GameMode.multiply;
+        playerSympol = PlayerSympol.X;
+        currentNumber = 1;
+        
+        xImg = new Image("tictactoe/assets/xBoard.png");
+        oImg = new Image("tictactoe/assets/oBoard.png");
         listOfButtons = new ArrayList<>();
         alert = new Alert(Alert.AlertType.INFORMATION, "winner");
+    }
+
+    public GameScreenController(GameMode gameMode){
+        this.gameMode = gameMode;
+        this.playerSympol = PlayerSympol.X;
+        currentNumber = 1;
+        
+        xImg = new Image("tictactoe/assets/xBoard.png");
+        oImg = new Image("tictactoe/assets/oBoard.png");
+        listOfButtons = new ArrayList<>();
+        alert = new Alert(Alert.AlertType.INFORMATION, "winner");
+    }
+    
+    public GameScreenController(GameMode gameMode, PlayerSympol playerSympol){
+        this.gameMode = gameMode;
+        this.playerSympol = playerSympol;
+        currentNumber = 1;
+        
+        xImg = new Image("tictactoe/assets/xBoard.png");
+        oImg = new Image("tictactoe/assets/oBoard.png");
+        listOfButtons = new ArrayList<>();
+        alert = new Alert(Alert.AlertType.INFORMATION, "winner");      
+    }
+   
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         listOfButtons.add(b00);
         listOfButtons.add(b01);
         listOfButtons.add(b02);
@@ -116,21 +130,47 @@ public class GameScreenController implements Initializable {
         listOfButtons.add(b21);
         listOfButtons.add(b22);
         
-        if(playMode == COMPUTER_MODE){
+        if(gameMode == GameMode.computer){
+            
+        }else if(gameMode == GameMode.multiply){
+            
             multiplayerMode();
-        }else if(playMode == MULTIPLAYER_MODE){
-        
-        }else if(playMode == ONLINE_MODE){
+            
+        }else if(gameMode == GameMode.online){
         
         }
-    }    
+    }
+
+    
+    @FXML
+    private void leaveMatch(MouseEvent event) throws Exception {
+        primaryStage = (Stage) quitBtn.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+        Parent mainRoot = loader.load();
+        Scene mainScene = new Scene(mainRoot);
+        primaryStage.setScene(mainScene);
+        
+       /* primaryStage = (Stage) quitBtn.getScene().getWindow();
+        Parent mainRoot = FXMLLoader.load(getClass().getResource("XML/MainScreenUi.fxml"));
+        Scene mainScene = new Scene(mainRoot, 600, 400);
+        primaryStage.setScene(mainScene);*/
+    }
+    
+    
+    private void setIconAndNamePlaceInScreen(){
+        if(playerSympol == PlayerSympol.O){
+            leftName.setText("COMPUTER");
+            leftIcon.setImage(new Image("/tictactoe/assets/brownComputer.png"));
+            rightName.setText("YOU");
+        }else if(playerSympol == PlayerSympol.X){
+            rightName.setText("COMPUTER");
+            rightIcon.setImage(new Image("/tictactoe/assets/redComputer.png"));
+            leftName.setText("YOU");
+        }
+    }
    
     
     private void multiplayerMode(){
-        leftName.setText("YOU");
-        rightName.setText("Computer");
-        Image redComputer = new Image("/tictactoe/assets/redComputer.png");
-        redPerson.setImage(redComputer);
         
         b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
@@ -201,33 +241,29 @@ public class GameScreenController implements Initializable {
     
     private void drawShapeForMultiPlayerMode(Button btn){
         if(btn.getText() == ""){
-            if(currentShapeToDraw % 2 != 0 ){
-                drawOorX(btn, "x");
-            }else if(currentShapeToDraw %2 == 0){
-                drawOorX(btn, "o");
+            if(currentNumber % 2 != 0 ){
+                drawOorX(btn, PlayerSympol.X);
+            }else if(currentNumber %2 == 0){
+                drawOorX(btn, PlayerSympol.O);
             }
-            currentShapeToDraw++;
+            currentNumber++;
             checkWin();
         }
     }
     
     
-    
-    
-    
-    
-    
-    private void drawOorX(Button btn,String shape ){
-        ImageView oimageView = new ImageView(oImg);
-        ImageView ximageView = new ImageView(xImg);
-        ximageView.setFitHeight(60);
-        ximageView.setFitWidth(60);
-        oimageView.setFitHeight(60);
-        oimageView.setFitWidth(60);
+    private void drawOorX(Button btn, PlayerSympol sympol){
+        ImageView oImageView = new ImageView(oImg);
+        ImageView xImageView = new ImageView(xImg);
         
-        btn.setGraphic(shape == "o" ? oimageView : ximageView);
+        xImageView.setFitHeight(60);
+        xImageView.setFitWidth(60);
+        oImageView.setFitHeight(60);
+        oImageView.setFitWidth(60);
+       
+        btn.setGraphic(sympol == PlayerSympol.O ? oImageView : xImageView);
         btn.setTextFill(Color.TRANSPARENT);
-        btn.setText(shape);
+        btn.setText(sympol == PlayerSympol.O ? "o" : "x");
     }
     
      private void checkWin(){
@@ -275,3 +311,13 @@ public class GameScreenController implements Initializable {
     
     
 }
+
+
+
+/*
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
+    Parent gameRoot = loader.load();
+    GameScreenController gameScreenController = new GameScreenController();
+    loader.setController(gameScreenController);
+    Scene gameScene = new Scene(gameRoot, 600, 400);
+*/
