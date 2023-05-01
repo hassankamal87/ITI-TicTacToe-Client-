@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.MainScreenUiController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/Background.jpg" />
          </image>
@@ -61,7 +61,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="onlineBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="240.0" mnemonicParsing="false" onMousePressed="#checkMousePressed" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
+      <Button fx:id="onlineBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="240.0" mnemonicParsing="false" onMousePressed="#checkOnline" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #B45F06; -fx-background-radius: 10px;" textAlignment="CENTER">
          <graphic>
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="241.0">
                <children>
@@ -79,7 +79,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="490.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="493.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -100,12 +100,12 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="490.0" layoutY="56.0" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="493.0" layoutY="55.0" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="historyBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#historyHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="History" textAlignment="CENTER">
+      <Button fx:id="historyBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="14.0" layoutY="356.0" mnemonicParsing="false" onAction="#historyHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="History" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

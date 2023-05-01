@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.PickYourSideScreenController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/Background.jpg" />
          </image>
@@ -18,7 +18,7 @@
             <Font name="Cooper Black" size="38.0" />
          </font>
       </Text>
-      <ImageView fitHeight="121.0" fitWidth="143.0" layoutX="304.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
+      <ImageView fitHeight="121.0" fitWidth="143.0" layoutX="304.0" layoutY="138.0" onMouseClicked="#setXAndNavigate" pickOnBounds="true" preserveRatio="true" fx:id="xImg">
          <image>
             <Image url="@../assets/x.png" />
          </image>
@@ -28,12 +28,12 @@
             <Image url="@../assets/v_line.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="oImg" fitHeight="121.0" fitWidth="113.0" layoutX="486.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="oImg" fitHeight="121.0" fitWidth="113.0" layoutX="486.0" layoutY="138.0" onMouseClicked="#setOAndNavigate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/o.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="backImg" fitHeight="69.0" fitWidth="77.0" layoutX="14.0" layoutY="323.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backImg" fitHeight="69.0" fitWidth="77.0" layoutX="14.0" layoutY="321.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/back.png" />
          </image>
