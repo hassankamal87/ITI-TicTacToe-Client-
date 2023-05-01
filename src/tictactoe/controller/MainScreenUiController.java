@@ -72,26 +72,11 @@ public class MainScreenUiController implements Initializable {
 
     @FXML
     private void playWithComputer(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
-        loader.setControllerFactory(new Callback<Class<?>, Object>() {
-            @Override
-            public Object call(Class<?> clazz) {
-                if (clazz == GameScreenController.class) {
-                    return new GameScreenController(GameMode.computer);
-                } else {
-                    try {
-                        return clazz.newInstance();
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-        });
-        Parent gameRoot = loader.load();
-
-        Scene gameScene = new Scene(gameRoot, 610, 410);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/Pick_Level.fxml"));
+        Parent pickLevelRoot = loader.load();
+        Scene pickLevelScene = new Scene(pickLevelRoot, 610, 410);
         Stage primaStage = (Stage) computerBtn.getScene().getWindow();
-        primaStage.setScene(gameScene);
+        primaStage.setScene(pickLevelScene);
     }
 
 
