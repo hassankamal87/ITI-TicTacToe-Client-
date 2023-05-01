@@ -14,11 +14,11 @@
             <Image url="@../assets/splash.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="playerStatusBtn" layoutX="79.0" layoutY="188.0" mnemonicParsing="false" style="-fx-background-color: #b22222;" text="Player Status" textFill="GHOSTWHITE">
+      <Button fx:id="playerStatusBtn" layoutX="79.0" layoutY="188.0" mnemonicParsing="false" onAction="#playerStatusHandler" style="-fx-background-color: #b22222;" text="Player Status" textFill="GHOSTWHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <ToggleButton fx:id="serverActivationBtn" layoutX="348.0" layoutY="188.0" mnemonicParsing="false" style="-fx-background-color: #b22222;" text="Server Activation" textFill="GHOSTWHITE">
+      <ToggleButton fx:id="serverActivationBtn" layoutX="348.0" layoutY="188.0" mnemonicParsing="false" onAction="#serverActivationHandler" style="-fx-background-color: #b22222;" text="Server Activation" textFill="GHOSTWHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></ToggleButton>
