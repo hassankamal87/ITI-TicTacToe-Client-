@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.PlayerGraphScreenController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/splash.jpg" />
+         </image>
+      </ImageView>
+      <PieChart fx:id="pieChart" prefHeight="400.0" prefWidth="600.0" title="Player Status Graph" />
+      <Text fx:id="onlineNum" layoutX="195.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fx:id="offlineNum" layoutX="475.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fx:id="onlinePlayersText" layoutX="87.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Players">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fx:id="offlinePlayersText" layoutX="360.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Offline PLayers">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+   </children>
+</AnchorPane>
