@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,18 +107,22 @@ public class ResultScreenController implements Initializable {
     }
 
     @FXML
-    private void homeHandler(ActionEvent event) throws IOException {
+    private void homeHandler(ActionEvent event)  {
         
-        mediaplayer.stop();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 610, 410);
-        Stage stage = (Stage) homeBtn.getScene().getWindow();
-        stage.setScene(scene);
+        try {
+            mediaplayer.stop();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 610, 410);
+            Stage stage = (Stage) homeBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(ResultScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    private void restartHandler(ActionEvent event) throws IOException {
+    private void restartHandler(ActionEvent event) {
         
             mediaplayer.stop();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
