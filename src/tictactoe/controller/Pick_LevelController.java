@@ -108,7 +108,7 @@ private boolean animationPlusFlag = true;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-       Stage stage = (Stage) Back.getScene().getWindow();
+        Stage stage = (Stage) Easy.getScene().getWindow();
         stage.setScene(scene);
     }
 

@@ -40,7 +40,7 @@
          <font>
             <Font size="28.0" />
          </font></Button>
-      <Button fx:id="Back" layoutX="14.0" layoutY="326.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: #666666; -fx-background-radius: 10px;" text="Back">
+      <Button fx:id="Back" layoutX="14.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#BackHandler" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: #666666; -fx-background-radius: 10px;" text="Back">
          <font>
             <Font size="28.0" />
          </font>
