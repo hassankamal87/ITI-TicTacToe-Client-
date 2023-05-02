@@ -9,18 +9,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.ResultScreenController">
    <children>
-      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
-            <Image url="@../assets/Background.jpg" />
+            <Image url="@../assets/backWin.jpg" />
          </image>
       </ImageView>
-      <MediaView fx:id="winnerScrn" fitHeight="270.0" fitWidth="610.0" />
-      <Button fx:id="homeBtn" layoutX="190.0" layoutY="300.0" mnemonicParsing="false" onAction="#homeHandler" style="-fx-background-color: #f4a460;" text="Home" textFill="WHITE">
+      <MediaView fx:id="winnerScrn" fitHeight="300.0" fitWidth="610.0" preserveRatio="false" />
+      <Button fx:id="homeBtn" layoutX="197.0" layoutY="331.0" mnemonicParsing="false" onAction="#homeHandler" style="-fx-background-color: #f4a460;" text="Home" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="restartBtn" layoutX="335.0" layoutY="300.0" mnemonicParsing="false" onAction="#restartHandler" style="-fx-background-color: #f4a460;" text="Restart" textFill="WHITE">
+      <Button fx:id="restartBtn" layoutX="342.0" layoutY="331.0" mnemonicParsing="false" onAction="#restartHandler" style="-fx-background-color: #f4a460;" text="Restart" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
