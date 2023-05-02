@@ -34,7 +34,7 @@ public class ResultScreenController implements Initializable {
     private Button homeBtn;
     @FXML
     private Button restartBtn;
-    
+
     private File file;
     private Media media;
     private MediaPlayer mediaplayer;
@@ -44,33 +44,38 @@ public class ResultScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        file = new File("C:\\Users\\WIN 10\\Downloads\\You Win, Perfect!.mp4");
-        media = new Media(file.toURI().toString());
+        //file = new File("C:\\Users\\WIN 10\\Downloads\\lose.mp4");
+        media = new Media(getClass().getResource("/tictactoe/assets/lose.mp4").toString());
         mediaplayer = new MediaPlayer(media);
         winnerScrn.setMediaPlayer(mediaplayer);
+        mediaplayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaplayer.stop();
+                winnerScrn.setVisible(false);
+            }
+        });
         mediaplayer.play();
-    }    
+    }
 
     @FXML
     private void homeHandler(ActionEvent event) throws IOException {
-        
-            mediaplayer.stop();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root,610,410);
-            Stage stage = (Stage) homeBtn.getScene().getWindow();
-            stage.setScene(scene);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 610, 410);
+        Stage stage = (Stage) homeBtn.getScene().getWindow();
+        stage.setScene(scene);
     }
 
     @FXML
     private void restartHandler(ActionEvent event) throws IOException {
-        
-            mediaplayer.stop();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root,610,410);
-            Stage stage = (Stage) homeBtn.getScene().getWindow();
-            stage.setScene(scene);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 610, 410);
+        Stage stage = (Stage) homeBtn.getScene().getWindow();
+        stage.setScene(scene);
     }
-    
+
 }

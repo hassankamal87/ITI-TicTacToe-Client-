@@ -9,9 +9,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.ResultScreenController">
    <children>
-      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
-            <Image url="@../assets/Background.jpg" />
+            <Image url="@../assets/backWin.jpg" />
          </image>
       </ImageView>
       <MediaView fx:id="winnerScrn" fitHeight="300.0" fitWidth="610.0" preserveRatio="false" />
