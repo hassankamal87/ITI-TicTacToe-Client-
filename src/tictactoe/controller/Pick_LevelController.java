@@ -80,21 +80,6 @@ private boolean animationPlusFlag = true;
         primaStage.setScene(pickSideScene);
     }
     
- /*   
-    
-private  void EasyMode(ActionEvent event) {
-        GameScreenController.setMode(GameScreenController.Easy_MODE);
-       gotoGameScreen();
-    }
-private  void MediumMode(ActionEvent event) {
-        GameScreenController.setMode(GameScreenController.Medium_MODE);
-       gotoGameScreen();
-    }
-   
-private  void HardMode(ActionEvent event) {
-        GameScreenController.setMode(GameScreenController.Hard_MODE);
-       gotoGameScreen();
-    }*/
   /*
     private void gotoGameScreen (MouseEvent event) throws IOException {
 
@@ -115,10 +100,21 @@ private  void HardMode(ActionEvent event) {
     }
 
     
-    private void BackHandller(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/PickYourSideScreen.fxml"));
+    
+
+    @FXML
+    private void MeduimHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void HardHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void BackHandler(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root,610,410);
+        Scene scene = new Scene(root);
        Stage stage = (Stage) Back.getScene().getWindow();
         stage.setScene(scene);
     }
