@@ -102,13 +102,6 @@ private boolean animationPlusFlag = true;
     
     
 
-    @FXML
-    private void MeduimHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void HardHandler(ActionEvent event) {
-    }
 
     @FXML
     private void BackHandler(MouseEvent event) throws IOException {
