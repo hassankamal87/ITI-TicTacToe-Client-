@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.SplashScreenController">
    <children>
-      <ImageView fx:id="backGroundImg" fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
+      <ImageView fx:id="backGroundImg" fitHeight="420.0" fitWidth="620.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/splash.jpg" />
          </image>

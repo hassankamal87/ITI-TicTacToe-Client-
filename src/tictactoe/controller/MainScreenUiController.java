@@ -24,6 +24,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import tictactoe.utility.GameMode;
 
@@ -52,6 +53,9 @@ public class MainScreenUiController implements Initializable {
     private Button onlineBtn;
     @FXML
     private Text UsernameTxt;
+    
+    
+    
 
     public MainScreenUiController() {
 
@@ -62,28 +66,45 @@ public class MainScreenUiController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
 
     }
 
     @FXML
-    private void playWithComputer(ActionEvent event) {
-        //go to pickLevel
+    private void playWithComputer(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/Pick_Level.fxml"));
+        Parent pickLevelRoot = loader.load();
+        Scene pickLevelScene = new Scene(pickLevelRoot, 610, 410);
+        Stage primaStage = (Stage) computerBtn.getScene().getWindow();
+        primaStage.setScene(pickLevelScene);
     }
 
 
     @FXML
     private void playlocal(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == GameScreenController.class) {
+                    return new GameScreenController(GameMode.multiply);
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
         Parent gameRoot = loader.load();
-        GameScreenController gameController = new GameScreenController(GameMode.multiply);
-        loader.setController(gameController);
-        Scene gameScene = new Scene(gameRoot, 600, 400);
-        Stage stage = (Stage) localBtn.getScene().getWindow();
-        stage.setScene(gameScene);
+        Scene gameScene = new Scene(gameRoot, 610, 410);
+        
+        Stage primaStage = (Stage) computerBtn.getScene().getWindow();
+        primaStage.setScene(gameScene);
     }
     
-        @FXML
+    @FXML
     private void checkOnline(MouseEvent event) {
         if (true) {
             if (animationPlusFlag) {

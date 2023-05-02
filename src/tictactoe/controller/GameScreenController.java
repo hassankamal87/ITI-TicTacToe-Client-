@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.utility.GameLevel;
 import tictactoe.utility.GameMode;
 import tictactoe.utility.PlayerSympol;
 
@@ -83,6 +84,7 @@ public class GameScreenController implements Initializable {
     private Stage primaryStage;
     private GameMode gameMode;
     private PlayerSympol playerSympol;
+    private GameLevel gameLevel;
     private boolean wonFlag = false;
     
     
@@ -108,9 +110,10 @@ public class GameScreenController implements Initializable {
         alert = new Alert(Alert.AlertType.INFORMATION, "winner");
     }
     
-    public GameScreenController(GameMode gameMode, PlayerSympol playerSympol){
-        this.gameMode = gameMode;
+    public GameScreenController(PlayerSympol playerSympol,GameLevel gameLevel){
+        this.gameMode = GameMode.computer;
         this.playerSympol = playerSympol;
+        this.gameLevel = gameLevel;
         currentNumber = 1;
         
         xImg = new Image("tictactoe/assets/xBoard.png");
@@ -132,9 +135,14 @@ public class GameScreenController implements Initializable {
         listOfButtons.add(b22);
         
         if(gameMode == GameMode.computer){
-            System.out.println("computer");
+            if(gameLevel == GameLevel.EASY){
+            
+            }else if(gameLevel == GameLevel.MEDIUM){
+            
+            }else if(gameLevel == GameLevel.HARD){
+            
+            }
         }else if(gameMode == GameMode.multiply){
-            System.out.println("multiply");
             multiplayerMode();
             
         }else if(gameMode == GameMode.online){
@@ -148,7 +156,7 @@ public class GameScreenController implements Initializable {
         primaryStage = (Stage) quitBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent mainRoot = loader.load();
-        Scene mainScene = new Scene(mainRoot);
+        Scene mainScene = new Scene(mainRoot,610,410);
         primaryStage.setScene(mainScene);
         
        /* primaryStage = (Stage) quitBtn.getScene().getWindow();
