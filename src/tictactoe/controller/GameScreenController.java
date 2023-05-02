@@ -335,7 +335,7 @@ public class GameScreenController implements Initializable {
     }
     
     private void resultScreen() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root,610,410);
             Stage stage = (Stage) quitBtn.getScene().getWindow();
