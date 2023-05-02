@@ -60,7 +60,7 @@ public class ResultScreenController implements Initializable {
 
     @FXML
     private void homeHandler(ActionEvent event) throws IOException {
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 610, 410);
