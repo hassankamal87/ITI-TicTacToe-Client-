@@ -1,4 +1,3 @@
-
 package tictactoe.controller;
 
 import java.io.IOException;
@@ -36,9 +35,8 @@ import tictactoe.utility.PlayerSympol;
  *
  * @author AB
  */
-
 public class GameScreenController implements Initializable {
-    
+
     @FXML
     private ImageView backGroundImg;
     @FXML
@@ -77,27 +75,26 @@ public class GameScreenController implements Initializable {
     private Text rightName;
     @FXML
     private Text rightNumber;
-    
+
     private ArrayList<Button> listOfButtons;
     private ArrayList<Button> avaiableList;
     Alert alert;
     Image xImg;
     Image oImg;
     private int currentNumber;
-    
+
     private Stage primaryStage;
     private GameMode gameMode;
     private PlayerSympol playerSympol;
     private GameLevel gameLevel;
     private PlayerSympol winnerSympol;
     private boolean wonFlag = false;
-    
-    
-    public GameScreenController(){
+
+    public GameScreenController() {
         gameMode = GameMode.multiply;
         playerSympol = PlayerSympol.X;
         currentNumber = 1;
-        
+
         xImg = new Image("tictactoe/assets/xBoard.png");
         oImg = new Image("tictactoe/assets/oBoard.png");
         listOfButtons = new ArrayList<>();
@@ -105,31 +102,31 @@ public class GameScreenController implements Initializable {
         alert = new Alert(Alert.AlertType.INFORMATION, "winner");
     }
 
-    public GameScreenController(GameMode gameMode){
+    public GameScreenController(GameMode gameMode) {
         this.gameMode = gameMode;
         this.playerSympol = PlayerSympol.X;
         currentNumber = 1;
-        
+
         xImg = new Image("tictactoe/assets/xBoard.png");
         oImg = new Image("tictactoe/assets/oBoard.png");
         listOfButtons = new ArrayList<>();
         avaiableList = new ArrayList<>();
         alert = new Alert(Alert.AlertType.INFORMATION, "winner");
     }
-    
-    public GameScreenController(PlayerSympol playerSympol,GameLevel gameLevel){
+
+    public GameScreenController(PlayerSympol playerSympol, GameLevel gameLevel) {
         this.gameMode = GameMode.computer;
         this.playerSympol = playerSympol;
         this.gameLevel = gameLevel;
         currentNumber = 1;
-        
+
         xImg = new Image("tictactoe/assets/xBoard.png");
         oImg = new Image("tictactoe/assets/oBoard.png");
         listOfButtons = new ArrayList<>();
         avaiableList = new ArrayList<>();
-        alert = new Alert(Alert.AlertType.INFORMATION, "winner");      
+        alert = new Alert(Alert.AlertType.INFORMATION, "winner");
     }
-   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listOfButtons.add(b00);
@@ -142,54 +139,48 @@ public class GameScreenController implements Initializable {
         listOfButtons.add(b21);
         listOfButtons.add(b22);
         avaiableList = (ArrayList<Button>) listOfButtons.clone();
-        
-        if(gameMode == GameMode.computer){
+
+        if (gameMode == GameMode.computer) {
             setIconAndNamePlaceInScreen();
-            if(gameLevel == GameLevel.EASY){
+            if (gameLevel == GameLevel.EASY) {
                 computerMode();
-            }else if(gameLevel == GameLevel.MEDIUM){
-            
-            }else if(gameLevel == GameLevel.HARD){
-            
+            } else if (gameLevel == GameLevel.MEDIUM) {
+
+            } else if (gameLevel == GameLevel.HARD) {
+
             }
-        }else if(gameMode == GameMode.multiply){
+        } else if (gameMode == GameMode.multiply) {
             multiplayerMode();
-            
-        }else if(gameMode == GameMode.online){
+
+        } else if (gameMode == GameMode.online) {
             System.out.println("online");
         }
     }
 
-    
     @FXML
     private void leaveMatch(MouseEvent event) throws Exception {
+
         primaryStage = (Stage) quitBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent mainRoot = loader.load();
-        Scene mainScene = new Scene(mainRoot,610,410);
+        Scene mainScene = new Scene(mainRoot, 610, 410);
         primaryStage.setScene(mainScene);
-        
-       /* primaryStage = (Stage) quitBtn.getScene().getWindow();
-        Parent mainRoot = FXMLLoader.load(getClass().getResource("XML/MainScreenUi.fxml"));
-        Scene mainScene = new Scene(mainRoot, 600, 400);
-        primaryStage.setScene(mainScene);*/
+
     }
-    
-    
-    private void setIconAndNamePlaceInScreen(){
-        if(playerSympol == PlayerSympol.O){
+
+    private void setIconAndNamePlaceInScreen() {
+        if (playerSympol == PlayerSympol.O) {
             leftName.setText("COMPUTER");
             leftIcon.setImage(new Image("/tictactoe/assets/brownComputer.png"));
             rightName.setText("YOU");
-        }else if(playerSympol == PlayerSympol.X){
+        } else if (playerSympol == PlayerSympol.X) {
             rightName.setText("COMPUTER");
             rightIcon.setImage(new Image("/tictactoe/assets/redComputer.png"));
             leftName.setText("YOU");
         }
     }
-   
-    
-    private void multiplayerMode(){
+
+    private void multiplayerMode() {
         gameKindTextView.setText(gameMode.toString());
         b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
@@ -197,66 +188,66 @@ public class GameScreenController implements Initializable {
                 drawShapeForMultiPlayerMode(b00);
             }
         });
-        
+
         b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b01);
             }
         });
-        
+
         b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b02);
             }
         });
-        
+
         b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b10);
             }
         });
-        
+
         b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b11);
             }
         });
-        
+
         b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b12);
             }
         });
-        
+
         b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b20);
             }
         });
-        
+
         b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b21);
             }
         });
-        
+
         b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForMultiPlayerMode(b22);
             }
         });
-        
+
     }
-    
-    private void computerMode(){
+
+    private void computerMode() {
         setIconAndNamePlaceInScreen();
         gameKindTextView.setText(gameLevel.toString());
         b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -265,149 +256,149 @@ public class GameScreenController implements Initializable {
                 drawShapeForEasyMode(b00);
             }
         });
-        
+
         b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b01);
             }
         });
-        
+
         b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b02);
             }
         });
-        
+
         b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b10);
             }
         });
-        
+
         b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b11);
             }
         });
-        
+
         b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b12);
             }
         });
-        
+
         b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b20);
             }
         });
-        
+
         b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b21);
             }
         });
-        
+
         b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drawShapeForEasyMode(b22);
             }
         });
-        
+
     }
-    private void drawShapeForEasyMode(Button btn){
-        if(btn.getText() == ""){
-            drawOorX(btn,playerSympol == PlayerSympol.X ? PlayerSympol.X : PlayerSympol.O);
+
+    private void drawShapeForEasyMode(Button btn) {
+        if (btn.getText() == "") {
+            drawOorX(btn, playerSympol == PlayerSympol.X ? PlayerSympol.X : PlayerSympol.O);
             avaiableList.remove(btn);
             checkWin();
-            if(!wonFlag)
+            if (!wonFlag) {
                 computerMove();
+            }
         }
     }
-    private void computerMove(){
-        if(avaiableList.size()>0){
+
+    private void computerMove() {
+        if (avaiableList.size() > 0) {
             Random random = new Random();
-            int indexToDraw = random.nextInt(avaiableList.size()-1);
+            int indexToDraw = random.nextInt(avaiableList.size() - 1);
             drawOorX(avaiableList.get(indexToDraw), playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
             avaiableList.remove(indexToDraw);
+            checkWin();
         }
     }
-    
-    private void drawShapeForMultiPlayerMode(Button btn){
-        if(btn.getText() == ""){
-            if(currentNumber % 2 != 0 ){
+
+    private void drawShapeForMultiPlayerMode(Button btn) {
+        if (btn.getText() == "") {
+            if (currentNumber % 2 != 0) {
                 drawOorX(btn, PlayerSympol.X);
-            }else if(currentNumber %2 == 0){
+            } else if (currentNumber % 2 == 0) {
                 drawOorX(btn, PlayerSympol.O);
             }
             currentNumber++;
             checkWin();
         }
     }
-    
-    
-    private void drawOorX(Button btn, PlayerSympol sympol){
+
+    private void drawOorX(Button btn, PlayerSympol sympol) {
         ImageView oImageView = new ImageView(oImg);
         ImageView xImageView = new ImageView(xImg);
-        
+
         xImageView.setFitHeight(60);
         xImageView.setFitWidth(60);
         oImageView.setFitHeight(60);
         oImageView.setFitWidth(60);
-       
+
         btn.setGraphic(sympol == PlayerSympol.O ? oImageView : xImageView);
         btn.setTextFill(Color.TRANSPARENT);
         btn.setText(sympol == PlayerSympol.O ? "o" : "x");
     }
-    
-     private void checkWin() {
-   
-        for(int i=0;i<listOfButtons.size();i+=3){
-            if(listOfButtons.get(i).getText() == listOfButtons.get(i+1).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i+2).getText() && listOfButtons.get(i).getText() != ""){
-                alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
-                alert.show();
-                freezeButton();
+
+    private void checkWin() {
+
+        for (int i = 0; i < listOfButtons.size(); i += 3) {
+            if (listOfButtons.get(i).getText() == listOfButtons.get(i + 1).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i + 2).getText() && listOfButtons.get(i).getText() != "") {
+                
+                winnerSympol = listOfButtons.get(i).getText() == "x"? playerSympol.X : PlayerSympol.O;
                 wonFlag = true;
+                resultScreen();
             }
         }
 
-        for(int i=0;i<3;i++){
-            if(listOfButtons.get(i).getText() == listOfButtons.get(i+3).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i+6).getText() && listOfButtons.get(i).getText() != ""){
-                alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
-                alert.show();
-                freezeButton();
+        for (int i = 0; i < 3; i++) {
+            if (listOfButtons.get(i).getText() == listOfButtons.get(i + 3).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i + 6).getText() && listOfButtons.get(i).getText() != "") {
+                winnerSympol = listOfButtons.get(i).getText() == "x"? playerSympol.X : PlayerSympol.O;
                 wonFlag = true;
+                resultScreen();
             }
         }
 
-        if(listOfButtons.get(0).getText() == listOfButtons.get(4).getText() && listOfButtons.get(0).getText() == listOfButtons.get(8).getText() && listOfButtons.get(0).getText() != ""){
-            alert.setContentText("Winner is "+ listOfButtons.get(0).getText());
-            alert.show();
-            freezeButton();
+        if (listOfButtons.get(0).getText() == listOfButtons.get(4).getText() && listOfButtons.get(0).getText() == listOfButtons.get(8).getText() && listOfButtons.get(0).getText() != "") {
+            winnerSympol = listOfButtons.get(0).getText() == "x"? playerSympol.X : PlayerSympol.O;
             wonFlag = true;
+            resultScreen();
         }
 
-        if(listOfButtons.get(2).getText() == listOfButtons.get(4).getText() && listOfButtons.get(2).getText() == listOfButtons.get(6).getText() && listOfButtons.get(2).getText() != ""){
-            alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
-            alert.show();
-            freezeButton();
+        if (listOfButtons.get(2).getText() == listOfButtons.get(4).getText() && listOfButtons.get(2).getText() == listOfButtons.get(6).getText() && listOfButtons.get(2).getText() != "") {
+            winnerSympol = listOfButtons.get(2).getText() == "x" ? playerSympol.X : PlayerSympol.O;
             wonFlag = true;
+            
+            resultScreen();
         }
-        if(currentNumber == 10 && !wonFlag){
-            alert.setContentText("Draw");
-            alert.show();
+        if (currentNumber == 10 && !wonFlag) {
+            resultScreen();
         }
     }
-     
-    private void freezeButton(){
+
+    private void freezeButton() {
         b22.setDisable(true);
         b20.setDisable(true);
         b12.setDisable(true);
@@ -418,19 +409,19 @@ public class GameScreenController implements Initializable {
         b21.setDisable(true);
         b00.setDisable(true);
     }
-    
-    /*private void resultScreen() {
+
+    private void resultScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/RsultScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
                 public Object call(Class<?> clazz) {
                     if (clazz == ResultScreenController.class) {
-                        if(winnerSympol == playerSympol)
+                        if (winnerSympol == playerSympol) {
                             return new ResultScreenController(MatchStatus.WIN);
-                        else if(winnerSympol != playerSympol){
+                        } else if (winnerSympol != playerSympol) {
                             return new ResultScreenController(MatchStatus.LOSE);
-                        }else{
+                        } else {
                             return new ResultScreenController(MatchStatus.DRAW);
                         }
                     } else {
@@ -443,20 +434,17 @@ public class GameScreenController implements Initializable {
                 }
             });
             Parent resultRoot = loader.load();
-            
+
             Scene resultScene = new Scene(resultRoot, 610, 410);
-            primaryStage = (Stage) b00.getScene().getWindow();
+            primaryStage = (Stage) quitBtn.getScene().getWindow();
             primaryStage.setScene(resultScene);
+
         } catch (IOException ex) {
-            System.out.println("here");
             Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }*/
-    
-    
+    }
+
 }
-
-
 
 /*
     FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
@@ -464,9 +452,9 @@ public class GameScreenController implements Initializable {
     GameScreenController gameScreenController = new GameScreenController();
     loader.setController(gameScreenController);
     Scene gameScene = new Scene(gameRoot, 600, 400);
-*/
+ */
 
-/*
+ /*
     FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
@@ -485,4 +473,4 @@ public class GameScreenController implements Initializable {
         Parent gameRoot = loader.load();
 
         Scene gameScene = new Scene(gameRoot, 600, 400);
-*/
+ */

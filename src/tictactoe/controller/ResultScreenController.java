@@ -47,21 +47,22 @@ public class ResultScreenController implements Initializable {
     private MediaPlayer mediaplayer;
     
     private MatchStatus matchStatus;
-    private GameMode gameMode;
-    private int leftSideScore;
-    private int rightSideScore;
-    private int winnerSide;
-    private PlayerSympol playerSympol;
-    private GameLevel gameLevel;
+    //private GameMode gameMode;
+    //private int leftSideScore;
+    //private int rightSideScore;
+    //private int winnerSide;
+    //private PlayerSympol playerSympol;
+    //private GameLevel gameLevel;
 
     public ResultScreenController() {
+        matchStatus = matchStatus.WIN;
     }
 
     public ResultScreenController(MatchStatus result) {
         matchStatus = result;
     }
     
-    public ResultScreenController(GameMode mode,MatchStatus result,int left,int right,int winner) {
+ /*   public ResultScreenController(GameMode mode,MatchStatus result,int left,int right,int winner) {
     }
     
     public ResultScreenController(GameMode mode,MatchStatus result,PlayerSympol sympol,GameLevel level,int left,int right,int winner) {
@@ -73,7 +74,7 @@ public class ResultScreenController implements Initializable {
         rightSideScore = right;
         winnerSide = winner;
         
-    }
+    }*/
 
     /**
      * Initializes the controller class.
@@ -81,7 +82,7 @@ public class ResultScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        if(null!=matchStatus) switch (matchStatus) {
+        if(matchStatus!=null) switch (matchStatus) {
             case WIN:
                 media = new Media(getClass().getResource("/tictactoe/assets/win.mp4").toString());
                 break;
