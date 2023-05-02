@@ -63,9 +63,14 @@ public class ResultScreenController implements Initializable {
     }
 
     @FXML
-    private void restartHandler(ActionEvent event) {
+    private void restartHandler(ActionEvent event) throws IOException {
         
-        mediaplayer.stop();
+            mediaplayer.stop();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root,610,410);
+            Stage stage = (Stage) homeBtn.getScene().getWindow();
+            stage.setScene(scene);
     }
     
 }

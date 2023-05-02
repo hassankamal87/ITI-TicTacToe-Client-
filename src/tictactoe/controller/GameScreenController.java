@@ -256,7 +256,11 @@ public class GameScreenController implements Initializable {
                 drawOorX(btn, PlayerSympol.O);
             }
             currentNumber++;
-            checkWin();
+            try {
+                checkWin();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -275,38 +279,42 @@ public class GameScreenController implements Initializable {
         btn.setText(sympol == PlayerSympol.O ? "o" : "x");
     }
     
-     private void checkWin(){
+     private void checkWin() throws IOException{
    
         for(int i=0;i<listOfButtons.size();i+=3){
             if(listOfButtons.get(i).getText() == listOfButtons.get(i+1).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i+2).getText() && listOfButtons.get(i).getText() != ""){
-                alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
+                /*alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
                 alert.show();
-                freezeButton();
+                freezeButton();*/
                 wonFlag = true;
+                resultScreen();
             }
         }
 
         for(int i=0;i<3;i++){
             if(listOfButtons.get(i).getText() == listOfButtons.get(i+3).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i+6).getText() && listOfButtons.get(i).getText() != ""){
-                alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
+                /*alert.setContentText("Winner is "+ listOfButtons.get(i).getText());
                 alert.show();
-                freezeButton();
+                freezeButton();*/
                 wonFlag = true;
+                resultScreen();
             }
         }
 
         if(listOfButtons.get(0).getText() == listOfButtons.get(4).getText() && listOfButtons.get(0).getText() == listOfButtons.get(8).getText() && listOfButtons.get(0).getText() != ""){
-            alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
+            /*alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
             alert.show();
-            freezeButton();
+            freezeButton();*/
             wonFlag = true;
+            resultScreen();
         }
 
         if(listOfButtons.get(2).getText() == listOfButtons.get(4).getText() && listOfButtons.get(2).getText() == listOfButtons.get(6).getText() && listOfButtons.get(2).getText() != ""){
-            alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
+            /*alert.setContentText("Winner is "+ listOfButtons.get(2).getText());
             alert.show();
-            freezeButton();
+            freezeButton();*/
             wonFlag = true;
+            resultScreen();
         }
         if(currentNumber == 10 && !wonFlag){
             alert.setContentText("Draw");
@@ -324,6 +332,14 @@ public class GameScreenController implements Initializable {
         b01.setDisable(true);
         b21.setDisable(true);
         b00.setDisable(true);
+    }
+    
+    private void resultScreen() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root,610,410);
+            Stage stage = (Stage) quitBtn.getScene().getWindow();
+            stage.setScene(scene);
     }
     
     
