@@ -1,5 +1,6 @@
 package tictactoe.controller;
 
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,10 +24,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import tictactoe.utility.GameLevel;
 import tictactoe.utility.GameMode;
 import tictactoe.utility.MatchStatus;
@@ -88,7 +95,10 @@ public class GameScreenController implements Initializable {
     private PlayerSympol playerSympol;
     private GameLevel gameLevel;
     private PlayerSympol winnerSympol;
+    private Line line;
     private boolean wonFlag = false;
+    @FXML
+    private AnchorPane containerPane;
 
     public GameScreenController() {
         gameMode = GameMode.multiply;
@@ -138,6 +148,11 @@ public class GameScreenController implements Initializable {
         listOfButtons.add(b20);
         listOfButtons.add(b21);
         listOfButtons.add(b22);
+        line = new Line();
+        line.setStrokeWidth(3);
+        line.setStroke(Color.BLACK);
+        line.setOpacity(1);
+        line.setStrokeLineCap(StrokeLineCap.ROUND);
         avaiableList = (ArrayList<Button>) listOfButtons.clone();
 
         if (gameMode == GameMode.computer) {
@@ -366,32 +381,47 @@ public class GameScreenController implements Initializable {
 
         for (int i = 0; i < listOfButtons.size(); i += 3) {
             if (listOfButtons.get(i).getText() == listOfButtons.get(i + 1).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i + 2).getText() && listOfButtons.get(i).getText() != "") {
-                
-                winnerSympol = listOfButtons.get(i).getText() == "x"? playerSympol.X : PlayerSympol.O;
+
+                winnerSympol = listOfButtons.get(i).getText() == "x" ? playerSympol.X : PlayerSympol.O;
+                line.setStartX(listOfButtons.get(i).getLayoutX() + (listOfButtons.get(i).getWidth() / 2)-20);
+                line.setStartY(listOfButtons.get(i).getLayoutY() + (listOfButtons.get(i).getHeight() / 2));
+                line.setEndX(listOfButtons.get(i + 2).getLayoutX() + (listOfButtons.get(i).getWidth() / 2)+15);
+                line.setEndY(listOfButtons.get(i + 2).getLayoutY() + (listOfButtons.get(i).getHeight() / 2));
                 wonFlag = true;
-                resultScreen();
+                animateResultAndGoToResult();
             }
         }
 
         for (int i = 0; i < 3; i++) {
             if (listOfButtons.get(i).getText() == listOfButtons.get(i + 3).getText() && listOfButtons.get(i).getText() == listOfButtons.get(i + 6).getText() && listOfButtons.get(i).getText() != "") {
-                winnerSympol = listOfButtons.get(i).getText() == "x"? playerSympol.X : PlayerSympol.O;
+                winnerSympol = listOfButtons.get(i).getText() == "x" ? playerSympol.X : PlayerSympol.O;
+                line.setStartX(listOfButtons.get(i).getLayoutX() + (listOfButtons.get(i).getWidth() / 2)-5);
+                line.setStartY(listOfButtons.get(i).getLayoutY() );
+                line.setEndX(listOfButtons.get(i + 6).getLayoutX() + (listOfButtons.get(i).getWidth() / 2)-5);
+                line.setEndY(listOfButtons.get(i + 6).getLayoutY() + (listOfButtons.get(i).getHeight()));
                 wonFlag = true;
-                resultScreen();
+                animateResultAndGoToResult();
             }
         }
 
         if (listOfButtons.get(0).getText() == listOfButtons.get(4).getText() && listOfButtons.get(0).getText() == listOfButtons.get(8).getText() && listOfButtons.get(0).getText() != "") {
-            winnerSympol = listOfButtons.get(0).getText() == "x"? playerSympol.X : PlayerSympol.O;
+            winnerSympol = listOfButtons.get(0).getText() == "x" ? playerSympol.X : PlayerSympol.O;
+            line.setStartX(listOfButtons.get(0).getLayoutX());
+            line.setStartY(listOfButtons.get(0).getLayoutY());
+            line.setEndX(listOfButtons.get(8).getLayoutX() + (listOfButtons.get(8).getWidth()));
+            line.setEndY(listOfButtons.get(8).getLayoutY() + (listOfButtons.get(8).getHeight()));
             wonFlag = true;
-            resultScreen();
+            animateResultAndGoToResult();
         }
 
         if (listOfButtons.get(2).getText() == listOfButtons.get(4).getText() && listOfButtons.get(2).getText() == listOfButtons.get(6).getText() && listOfButtons.get(2).getText() != "") {
             winnerSympol = listOfButtons.get(2).getText() == "x" ? playerSympol.X : PlayerSympol.O;
+            line.setStartX(listOfButtons.get(2).getLayoutX() + (b00.getWidth()));
+            line.setStartY(listOfButtons.get(2).getLayoutY());
+            line.setEndX(listOfButtons.get(6).getLayoutX());
+            line.setEndY(listOfButtons.get(6).getLayoutY() + (b00.getHeight()));
             wonFlag = true;
-            
-            resultScreen();
+            animateResultAndGoToResult();
         }
         if (currentNumber == 10 && !wonFlag) {
             resultScreen();
@@ -399,15 +429,32 @@ public class GameScreenController implements Initializable {
     }
 
     private void freezeButton() {
-        b22.setDisable(true);
-        b20.setDisable(true);
-        b12.setDisable(true);
-        b11.setDisable(true);
-        b10.setDisable(true);
-        b02.setDisable(true);
-        b01.setDisable(true);
-        b21.setDisable(true);
-        b00.setDisable(true);
+        for(Button button : listOfButtons){
+            button.setDisable(true);
+            button.setStyle("-fx-opacity: 1.0;-fx-background-color:  transparent");
+        }
+    }
+
+    private void animateResultAndGoToResult() {
+        //containerPane.getChildren().add(line);
+        freezeButton();
+        ScaleTransition scale;
+        scale = new ScaleTransition();
+        scale.setNode(line);
+        scale.setDuration(Duration.millis(2000));
+        scale.setCycleCount(1);
+        scale.setFromX(0);
+        scale.setFromY(0);
+        scale.setToX(1);
+        scale.setToY(1);
+        SequentialTransition sequentialTransition = new SequentialTransition(scale);
+        sequentialTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                resultScreen();
+            }
+        });
+        sequentialTransition.play();
     }
 
     private void resultScreen() {
@@ -445,7 +492,6 @@ public class GameScreenController implements Initializable {
     }
 
 }
-
 /*
     FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
     Parent gameRoot = loader.load();

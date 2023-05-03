@@ -53,9 +53,6 @@ public class MainScreenUiController implements Initializable {
     private Button onlineBtn;
     @FXML
     private Text UsernameTxt;
-    
-    
-    
 
     public MainScreenUiController() {
 
@@ -66,7 +63,6 @@ public class MainScreenUiController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
 
     }
 
@@ -78,7 +74,6 @@ public class MainScreenUiController implements Initializable {
         Stage primaStage = (Stage) computerBtn.getScene().getWindow();
         primaStage.setScene(pickLevelScene);
     }
-
 
     @FXML
     private void playlocal(ActionEvent event) throws IOException {
@@ -99,26 +94,24 @@ public class MainScreenUiController implements Initializable {
         });
         Parent gameRoot = loader.load();
         Scene gameScene = new Scene(gameRoot, 610, 410);
-        
+
         Stage primaStage = (Stage) computerBtn.getScene().getWindow();
         primaStage.setScene(gameScene);
     }
-    
+
     @FXML
-    private void checkOnline(MouseEvent event) {
+    private void checkOnline(MouseEvent event) throws IOException {
         if (true) {
-            if (animationPlusFlag) {
-                translate(onlineBtn, 70);
-                animationPlusFlag = false;
-            } else {
-                translate(onlineBtn, -70);
-                animationPlusFlag = true;
-            }
-        }else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
+            Parent pickLevelRoot = loader.load();
+            Scene pickLevelScene = new Scene(pickLevelRoot, 610, 410);
+            Stage primaStage = (Stage) computerBtn.getScene().getWindow();
+            primaStage.setScene(pickLevelScene);
+        } else {
             //user is singed in and can play online
         }
     }
-    
+
     @FXML
     private void signInHandler(ActionEvent event) throws IOException {
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
@@ -128,7 +121,7 @@ public class MainScreenUiController implements Initializable {
 //        Scene gameScene = new Scene(gameRoot, 600, 400);
 //        Stage stage = (Stage) signInBtn.getScene().getWindow();
 //        stage.setScene(gameScene);
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -152,14 +145,14 @@ public class MainScreenUiController implements Initializable {
     private void historyHandler(ActionEvent event) {
     }
 
-    private void translate(Node node, double x) {
-        onlineBtn.setDisable(true);
-        TranslateTransition translate = new TranslateTransition();
-        translate.setNode(node);
-        translate.setDuration(Duration.millis(100));
-        translate.setCycleCount(1);
-        translate.setByY(x);
-        translate.play();
-        onlineBtn.setDisable(false);
-    }
+//    private void translate(Node node, double x) {
+//        onlineBtn.setDisable(true);
+//        TranslateTransition translate = new TranslateTransition();
+//        translate.setNode(node);
+//        translate.setDuration(Duration.millis(100));
+//        translate.setCycleCount(1);
+//        translate.setByY(x);
+//        translate.play();
+//        onlineBtn.setDisable(false);
+//    }
 }
