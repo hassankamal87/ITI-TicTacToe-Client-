@@ -103,7 +103,6 @@ public class GameScreenController implements Initializable {
     private int leftSideScore = 0;
     private int rightSideScore = 0;
     private Line line;
-    private boolean wonFlag = false;
     @FXML
     private AnchorPane containerPane;
     private Result result;
@@ -342,7 +341,7 @@ public class GameScreenController implements Initializable {
             drawOorX(btn, playerSympol == PlayerSympol.X ? PlayerSympol.X : PlayerSympol.O);
             avaiableList.remove(btn);
             checkWin();
-            if (!wonFlag) {
+            if (matchStatus != WIN) {
                 computerMove();
             }
         }
@@ -394,7 +393,6 @@ public class GameScreenController implements Initializable {
                 line.setStartY(listOfButtons.get(i).getLayoutY() + (listOfButtons.get(i).getHeight() / 2));
                 line.setEndX(listOfButtons.get(i + 2).getLayoutX() + (listOfButtons.get(i).getWidth() / 2) + 15);
                 line.setEndY(listOfButtons.get(i + 2).getLayoutY() + (listOfButtons.get(i).getHeight() / 2));
-                wonFlag = true;
                 matchStatus = WIN;
                 animateResultAndGoToResult();
                 return;
@@ -408,7 +406,6 @@ public class GameScreenController implements Initializable {
                 line.setStartY(listOfButtons.get(i).getLayoutY());
                 line.setEndX(listOfButtons.get(i + 6).getLayoutX() + (listOfButtons.get(i).getWidth() / 2) - 5);
                 line.setEndY(listOfButtons.get(i + 6).getLayoutY() + (listOfButtons.get(i).getHeight()));
-                wonFlag = true;
                 matchStatus = WIN;
                 animateResultAndGoToResult();
                 return;
@@ -421,7 +418,6 @@ public class GameScreenController implements Initializable {
             line.setStartY(listOfButtons.get(0).getLayoutY());
             line.setEndX(listOfButtons.get(8).getLayoutX() + (listOfButtons.get(8).getWidth()));
             line.setEndY(listOfButtons.get(8).getLayoutY() + (listOfButtons.get(8).getHeight()));
-            wonFlag = true;
             matchStatus = WIN;
             animateResultAndGoToResult();
             return;
@@ -433,12 +429,12 @@ public class GameScreenController implements Initializable {
             line.setStartY(listOfButtons.get(2).getLayoutY());
             line.setEndX(listOfButtons.get(6).getLayoutX());
             line.setEndY(listOfButtons.get(6).getLayoutY() + (b00.getHeight()));
-            wonFlag = true;
             matchStatus = WIN;
             animateResultAndGoToResult();
             return;
         }
-        if (currentNumber == 10 && !wonFlag) {
+        if (currentNumber == 10 && matchStatus != WIN) {
+            System.out.println("draw");
             matchStatus = DRAW;
             resultScreen();
         }
@@ -478,22 +474,22 @@ public class GameScreenController implements Initializable {
         //public Result(GameMode mode, GameLevel level, PlayerSympol sympol, MatchStatus result, int leftSideScore, int rightSideScore, int winnerSide) {
 
         try {
-
-            if (winnerSympol == playerSympol) {
-                matchStatus = WIN;
-                if (playerSympol == playerSympol.O) {
-                    rightSideScore++;
-                } else {
-                    leftSideScore++;
+            if(winnerSympol != null){
+                if (winnerSympol == playerSympol) {
+                    if (playerSympol == playerSympol.O) {
+                        rightSideScore++;
+                    } else {
+                        leftSideScore++;
+                    }
+                } else if (winnerSympol != playerSympol) {
+                    matchStatus = LOSE;
+                    if (playerSympol == playerSympol.O) {
+                        leftSideScore++;
+                    } else {
+                        rightSideScore++;
+                    }
                 }
-            } else if (winnerSympol != playerSympol) {
-                matchStatus = LOSE;
-                if (playerSympol == playerSympol.O) {
-                    leftSideScore++;
-                } else {
-                    rightSideScore++;
-                }
-            } else {
+        }else{
                 matchStatus = DRAW;
             }
             result = new Result(gameMode, gameLevel, playerSympol, matchStatus, leftSideScore, rightSideScore);
