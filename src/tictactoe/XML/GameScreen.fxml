@@ -35,7 +35,7 @@
             </Text>
          </top>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="containerPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="gridImg" fitHeight="291.0" fitWidth="379.0" layoutX="111.0" layoutY="7.0" pickOnBounds="true">
                      <image>
