@@ -436,7 +436,7 @@ public class GameScreenController implements Initializable {
     }
 
     private void animateResultAndGoToResult() {
-        //containerPane.getChildren().add(line);
+        containerPane.getChildren().add(line);
         freezeButton();
         ScaleTransition scale;
         scale = new ScaleTransition();
