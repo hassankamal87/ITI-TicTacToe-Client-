@@ -93,7 +93,8 @@ public class GameScreenController implements Initializable {
     Image xImg;
     Image oImg;
     private int currentNumber;
-
+    
+    SequentialTransition sequentialTransition;
     private Stage primaryStage;
     private GameMode gameMode;
     private PlayerSympol playerSympol;
@@ -182,8 +183,9 @@ public class GameScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
         Parent mainRoot = loader.load();
         Scene mainScene = new Scene(mainRoot, 610, 410);
+        stopDrawLine();
         primaryStage.setScene(mainScene);
-
+        
     }
 
     private void setIconAndNamePlaceInScreen() {
@@ -350,7 +352,7 @@ public class GameScreenController implements Initializable {
     private void computerMove() {
         if (avaiableList.size() > 0) {
             Random random = new Random();
-            int indexToDraw = random.nextInt(avaiableList.size() - 1);
+            int indexToDraw = random.nextInt(avaiableList.size());
             drawOorX(avaiableList.get(indexToDraw), playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
             avaiableList.remove(indexToDraw);
             checkWin();
@@ -364,6 +366,7 @@ public class GameScreenController implements Initializable {
             } else if (currentNumber % 2 == 0) {
                 drawOorX(btn, PlayerSympol.O);
             }
+            avaiableList.remove(btn);
             currentNumber++;
             checkWin();
         }
@@ -433,11 +436,13 @@ public class GameScreenController implements Initializable {
             animateResultAndGoToResult();
             return;
         }
-        if (currentNumber == 10 && matchStatus != WIN) {
+        if (avaiableList.size()==0 && matchStatus != WIN) {
             System.out.println("draw");
             matchStatus = DRAW;
             resultScreen();
         }
+        
+        
     }
 
     private void freezeButton() {
@@ -448,7 +453,6 @@ public class GameScreenController implements Initializable {
     }
 
     private void animateResultAndGoToResult() {
-        //if(containerPane.conta)
         containerPane.getChildren().add(line);
         freezeButton();
         ScaleTransition scale;
@@ -460,7 +464,7 @@ public class GameScreenController implements Initializable {
         scale.setFromY(0);
         scale.setToX(1);
         scale.setToY(1);
-        SequentialTransition sequentialTransition = new SequentialTransition(scale);
+        sequentialTransition = new SequentialTransition(scale);
         sequentialTransition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -471,8 +475,7 @@ public class GameScreenController implements Initializable {
     }
 
     private void resultScreen() {
-        //public Result(GameMode mode, GameLevel level, PlayerSympol sympol, MatchStatus result, int leftSideScore, int rightSideScore, int winnerSide) {
-
+        
         try {
             if(winnerSympol != null){
                 if (winnerSympol == playerSympol) {
@@ -521,33 +524,11 @@ public class GameScreenController implements Initializable {
             Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void stopDrawLine(){
+        if(sequentialTransition != null)
+            sequentialTransition.stop();
+    }
 
 }
-/*
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
-    Parent gameRoot = loader.load();
-    GameScreenController gameScreenController = new GameScreenController();
-    loader.setController(gameScreenController);
-    Scene gameScene = new Scene(gameRoot, 600, 400);
- */
 
- /*
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("XML/GameScreen.fxml"));
-        loader.setControllerFactory(new Callback<Class<?>, Object>() {
-            @Override
-            public Object call(Class<?> clazz) {
-                if (clazz == GameScreenController.class) {
-                    return new GameScreenController(GameMode.multiply );
-                } else {
-                    try {
-                        return clazz.newInstance();
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-        });
-        Parent gameRoot = loader.load();
-
-        Scene gameScene = new Scene(gameRoot, 600, 400);
- */
