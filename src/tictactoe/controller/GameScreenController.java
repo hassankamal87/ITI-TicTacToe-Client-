@@ -158,22 +158,17 @@ public class GameScreenController implements Initializable {
         avaiableList = (ArrayList<Button>) listOfButtons.clone();
         rightNumber.setText(rightSideScore + "");
         leftNumber.setText(leftSideScore + "");
+        
+        
         if (gameMode == GameMode.computer) {
             setIconAndNamePlaceInScreen();
-            if (gameLevel == GameLevel.EASY) {
-                computerMode();
-            } else if (gameLevel == GameLevel.MEDIUM) {
-
-            } else if (gameLevel == GameLevel.HARD) {
-
-            }
-        } else if (gameMode == GameMode.multiply) {
-
+            computerMode();
+        } else if (gameMode == GameMode.multiplayer) {
             multiplayerMode();
-
         } else if (gameMode == GameMode.online) {
             System.out.println("online");
         }
+        
     }
 
     @FXML
@@ -199,6 +194,78 @@ public class GameScreenController implements Initializable {
             leftName.setText("YOU");
         }
     }
+    
+     private void computerMode() {
+        setIconAndNamePlaceInScreen();
+        gameKindTextView.setText(gameLevel.toString());
+        if (playerSympol == PlayerSympol.O) {
+            easyMove();
+        }
+        b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b00);
+            }
+        });
+
+        b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b01);
+            }
+        });
+
+        b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b02);
+            }
+        });
+
+        b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b10);
+            }
+        });
+
+        b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b11);
+            }
+        });
+
+        b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b12);
+            }
+        });
+
+        b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b20);
+            }
+        });
+
+        b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b21);
+            }
+        });
+
+        b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                drawShapeForComputer(b22);
+            }
+        });
+
+    }
+
 
     private void multiplayerMode() {
         gameKindTextView.setText(gameMode.toString());
@@ -267,89 +334,19 @@ public class GameScreenController implements Initializable {
 
     }
 
-    private void computerMode() {
-        setIconAndNamePlaceInScreen();
-        gameKindTextView.setText(gameLevel.toString());
-        if (playerSympol == PlayerSympol.O) {
-            computerMove();
-        }
-        b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b00);
-            }
-        });
-
-        b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b01);
-            }
-        });
-
-        b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b02);
-            }
-        });
-
-        b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b10);
-            }
-        });
-
-        b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b11);
-            }
-        });
-
-        b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b12);
-            }
-        });
-
-        b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b20);
-            }
-        });
-
-        b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b21);
-            }
-        });
-
-        b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForEasyMode(b22);
-            }
-        });
-
-    }
-
-    private void drawShapeForEasyMode(Button btn) {
+    private void drawShapeForComputer(Button btn) {
         if (btn.getText() == "") {
             drawOorX(btn, playerSympol == PlayerSympol.X ? PlayerSympol.X : PlayerSympol.O);
             avaiableList.remove(btn);
             checkWin();
             if (matchStatus != WIN) {
-                computerMove();
+                if(gameLevel == GameLevel.EASY)
+                    easyMove();
             }
         }
     }
 
-    private void computerMove() {
+    private void easyMove() {
         if (avaiableList.size() > 0) {
             Random random = new Random();
             int indexToDraw = random.nextInt(avaiableList.size());
@@ -358,7 +355,7 @@ public class GameScreenController implements Initializable {
             checkWin();
         }
     }
-
+    
     private void drawShapeForMultiPlayerMode(Button btn) {
         if (btn.getText() == "") {
             if (currentNumber % 2 != 0) {
@@ -529,6 +526,6 @@ public class GameScreenController implements Initializable {
         if(sequentialTransition != null)
             sequentialTransition.stop();
     }
-
+  
 }
 
