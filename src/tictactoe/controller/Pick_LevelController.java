@@ -56,7 +56,6 @@ private boolean animationPlusFlag = true;
     
     @FXML
     private void EasyHandler(MouseEvent event) throws IOException {
-        System.out.println("easy");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/PickYourSideScreen.fxml"));
         
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
