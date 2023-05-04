@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import tictactoe.Connection;
 import tictactoe.utility.GameMode;
 
 /**
@@ -63,7 +64,7 @@ public class MainScreenUiController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        Connection.getInstance().startConnection();
     }
 
     @FXML
