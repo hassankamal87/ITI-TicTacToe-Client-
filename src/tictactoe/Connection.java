@@ -71,14 +71,13 @@ public class Connection implements Runnable {
 
             } catch (SocketException ex) {
                 try {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                     dis.close();
                     ps.close();
                     server.close();
                     System.out.println("server closed");
                     break;
-                } catch (IOException ex1) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex1);
+                } catch (IOException exception) {
+                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, exception);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
