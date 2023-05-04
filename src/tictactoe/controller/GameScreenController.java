@@ -1,6 +1,5 @@
 package tictactoe.controller;
 
-import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,14 +14,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -35,7 +31,6 @@ import javafx.util.Duration;
 import tictactoe.Result;
 import tictactoe.utility.GameLevel;
 import tictactoe.utility.GameMode;
-import static tictactoe.utility.GameMode.computer;
 import tictactoe.utility.MatchStatus;
 import static tictactoe.utility.MatchStatus.DRAW;
 import static tictactoe.utility.MatchStatus.LOSE;
@@ -93,7 +88,7 @@ public class GameScreenController implements Initializable {
     Image xImg;
     Image oImg;
     private int currentNumber;
-    
+
     SequentialTransition sequentialTransition;
     private Stage primaryStage;
     private GameMode gameMode;
@@ -107,8 +102,6 @@ public class GameScreenController implements Initializable {
     @FXML
     private AnchorPane containerPane;
     private Result result;
-
-
 
     public GameScreenController(GameMode gameMode) {
         this.gameMode = gameMode;
@@ -158,8 +151,7 @@ public class GameScreenController implements Initializable {
         avaiableList = (ArrayList<Button>) listOfButtons.clone();
         rightNumber.setText(rightSideScore + "");
         leftNumber.setText(leftSideScore + "");
-        
-        
+
         if (gameMode == GameMode.computer) {
             setIconAndNamePlaceInScreen();
             computerMode();
@@ -168,7 +160,24 @@ public class GameScreenController implements Initializable {
         } else if (gameMode == GameMode.online) {
             System.out.println("online");
         }
-        
+    }
+
+    private void computerMode() {
+        setIconAndNamePlaceInScreen();
+        gameKindTextView.setText(gameLevel.toString());
+
+        if (playerSympol == PlayerSympol.O) {
+            easyMove();
+        }
+
+        for (Button button : listOfButtons) {
+            button.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    drawShapeForComputer(button);
+                }
+            });
+        }
     }
 
     @FXML
@@ -180,7 +189,12 @@ public class GameScreenController implements Initializable {
         Scene mainScene = new Scene(mainRoot, 610, 410);
         stopDrawLine();
         primaryStage.setScene(mainScene);
-        
+    }
+
+    private void stopDrawLine() {
+        if (sequentialTransition != null) {
+            sequentialTransition.stop();
+        }
     }
 
     private void setIconAndNamePlaceInScreen() {
@@ -194,144 +208,18 @@ public class GameScreenController implements Initializable {
             leftName.setText("YOU");
         }
     }
-    
-     private void computerMode() {
-        setIconAndNamePlaceInScreen();
-        gameKindTextView.setText(gameLevel.toString());
-        if (playerSympol == PlayerSympol.O) {
-            easyMove();
-        }
-        b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b00);
-            }
-        });
-
-        b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b01);
-            }
-        });
-
-        b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b02);
-            }
-        });
-
-        b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b10);
-            }
-        });
-
-        b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b11);
-            }
-        });
-
-        b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b12);
-            }
-        });
-
-        b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b20);
-            }
-        });
-
-        b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b21);
-            }
-        });
-
-        b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForComputer(b22);
-            }
-        });
-
-    }
-
 
     private void multiplayerMode() {
         gameKindTextView.setText(gameMode.toString());
-        b00.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b00);
-            }
-        });
 
-        b01.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b01);
-            }
-        });
-
-        b02.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b02);
-            }
-        });
-
-        b10.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b10);
-            }
-        });
-
-        b11.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b11);
-            }
-        });
-
-        b12.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b12);
-            }
-        });
-
-        b20.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b20);
-            }
-        });
-
-        b21.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b21);
-            }
-        });
-
-        b22.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drawShapeForMultiPlayerMode(b22);
-            }
-        });
-
+        for (Button button : listOfButtons) {
+            button.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    drawShapeForMultiPlayerMode(button);
+                }
+            });
+        }
     }
 
     private void drawShapeForComputer(Button btn) {
@@ -340,8 +228,9 @@ public class GameScreenController implements Initializable {
             avaiableList.remove(btn);
             checkWin();
             if (matchStatus != WIN) {
-                if(gameLevel == GameLevel.EASY)
+                if (gameLevel == GameLevel.EASY) {
                     easyMove();
+                }
             }
         }
     }
@@ -355,7 +244,7 @@ public class GameScreenController implements Initializable {
             checkWin();
         }
     }
-    
+
     private void drawShapeForMultiPlayerMode(Button btn) {
         if (btn.getText() == "") {
             if (currentNumber % 2 != 0) {
@@ -433,13 +322,12 @@ public class GameScreenController implements Initializable {
             animateResultAndGoToResult();
             return;
         }
-        if (avaiableList.size()==0 && matchStatus != WIN) {
+        if (avaiableList.size() == 0 && matchStatus != WIN) {
             System.out.println("draw");
             matchStatus = DRAW;
             resultScreen();
         }
-        
-        
+
     }
 
     private void freezeButton() {
@@ -472,26 +360,9 @@ public class GameScreenController implements Initializable {
     }
 
     private void resultScreen() {
-        
+
         try {
-            if(winnerSympol != null){
-                if (winnerSympol == playerSympol) {
-                    if (playerSympol == playerSympol.O) {
-                        rightSideScore++;
-                    } else {
-                        leftSideScore++;
-                    }
-                } else if (winnerSympol != playerSympol) {
-                    matchStatus = LOSE;
-                    if (playerSympol == playerSympol.O) {
-                        leftSideScore++;
-                    } else {
-                        rightSideScore++;
-                    }
-                }
-        }else{
-                matchStatus = DRAW;
-            }
+            getMatchStatus();
             result = new Result(gameMode, gameLevel, playerSympol, matchStatus, leftSideScore, rightSideScore);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ResultScreen.fxml"));
@@ -521,11 +392,25 @@ public class GameScreenController implements Initializable {
             Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void stopDrawLine(){
-        if(sequentialTransition != null)
-            sequentialTransition.stop();
-    }
-  
-}
 
+    private void getMatchStatus() {
+        if (winnerSympol != null) {
+            if (winnerSympol == playerSympol) {
+                if (playerSympol == playerSympol.O) {
+                    rightSideScore++;
+                } else {
+                    leftSideScore++;
+                }
+            } else if (winnerSympol != playerSympol) {
+                matchStatus = LOSE;
+                if (playerSympol == playerSympol.O) {
+                    leftSideScore++;
+                } else {
+                    rightSideScore++;
+                }
+            }
+        } else {
+            matchStatus = DRAW;
+        }
+    }
+}
