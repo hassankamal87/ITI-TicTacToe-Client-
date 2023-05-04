@@ -82,7 +82,7 @@ public class MainScreenUiController implements Initializable {
             @Override
             public Object call(Class<?> clazz) {
                 if (clazz == GameScreenController.class) {
-                    return new GameScreenController(GameMode.multiply);
+                    return new GameScreenController(GameMode.multiplayer);
                 } else {
                     try {
                         return clazz.newInstance();
