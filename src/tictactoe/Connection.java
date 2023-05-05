@@ -39,7 +39,7 @@ public class Connection implements Runnable {
 
     public void startConnection() {
         try {
-            server = new Socket("172.17.64.1", 5005);
+            server = new Socket("127.0.0.1", 5005);
             dis = new DataInputStream(server.getInputStream());
             ps = new PrintStream(server.getOutputStream());
             clientThread = new Thread(this);
