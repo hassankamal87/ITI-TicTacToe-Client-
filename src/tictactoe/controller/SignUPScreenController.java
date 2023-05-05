@@ -21,6 +21,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import tictactoe.ClientNetwork;
 
 /**
  * FXML Controller class
@@ -41,13 +42,15 @@ public class SignUPScreenController implements Initializable {
     private Button mainManuBtn;
     @FXML
     private PasswordField passwordConTextFieldUp;
+    
+    ClientNetwork clientNetwork;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        clientNetwork = new ClientNetwork();
     }    
 
     @FXML
