@@ -28,6 +28,7 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import tictactoe.Connection;
 import tictactoe.utility.GameMode;
+import javafx.application.Platform;
 
 /**
  * FXML Controller class
@@ -36,16 +37,12 @@ import tictactoe.utility.GameMode;
  */
 public class MainScreenUiController implements Initializable {
 
-    private boolean animationPlusFlag = true;
+    //private boolean animationPlusFlag = true;
 
     @FXML
     private Button computerBtn;
     @FXML
     private Button localBtn;
-    @FXML
-    private Button signInBtn;
-    @FXML
-    private Button signUpBtn;
     @FXML
     private Button historyBtn;
     @FXML
@@ -54,6 +51,8 @@ public class MainScreenUiController implements Initializable {
     private Button onlineBtn;
     @FXML
     private Text UsernameTxt;
+
+    boolean isSignedin = false;
 
     public MainScreenUiController() {
 
@@ -64,7 +63,6 @@ public class MainScreenUiController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Connection.getInstance().startConnection();
     }
 
     @FXML
@@ -102,45 +100,18 @@ public class MainScreenUiController implements Initializable {
 
     @FXML
     private void checkOnline(MouseEvent event) throws IOException {
-        if (true) {
+        if (isSignedin) {
+            //user is singed in and can play online
+        } else {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
             Parent pickLevelRoot = loader.load();
             Scene pickLevelScene = new Scene(pickLevelRoot, 610, 410);
             Stage primaStage = (Stage) computerBtn.getScene().getWindow();
             primaStage.setScene(pickLevelScene);
-        } else {
-            //user is singed in and can play online
         }
     }
 
-    @FXML
-    private void signInHandler(ActionEvent event) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
-//        Parent gameRoot = loader.load();
-//        GameScreenController gameController = new GameScreenController(GameMode.multiply);
-//        loader.setController(gameController);
-//        Scene gameScene = new Scene(gameRoot, 600, 400);
-//        Stage stage = (Stage) signInBtn.getScene().getWindow();
-//        stage.setScene(gameScene);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) signInBtn.getScene().getWindow();
-        stage.setScene(scene);
-
-    }
-
-    @FXML
-    private void signUpHandler(ActionEvent event) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignUPScreen.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) signUpBtn.getScene().getWindow();
-        stage.setScene(scene);
-
-    }
 
     @FXML
     private void historyHandler(ActionEvent event) {

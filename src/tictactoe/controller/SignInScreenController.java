@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -52,6 +53,15 @@ public class SignInScreenController implements Initializable {
     private void backHandler(ActionEvent event) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root,610,410);
+            Stage stage = (Stage) backBtn.getScene().getWindow();
+            stage.setScene(scene);
+    }
+
+    @FXML
+    private void goToSignup(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignUPScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root,610,410);
             Stage stage = (Stage) backBtn.getScene().getWindow();
