@@ -74,7 +74,6 @@ public class SignUPScreenController implements Initializable {
 
         String resultString = validation();
         if (resultString == "") {
-            System.out.println("Valid");
             JSONObject signupObject = new JSONObject();
             signupObject.put(JsonObjectHelper.HEADER, JsonObjectHelper.SIGNUP);
             signupObject.put(JsonObjectHelper.EMAIL, email);
