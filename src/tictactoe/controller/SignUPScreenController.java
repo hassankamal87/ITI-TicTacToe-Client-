@@ -151,3 +151,4 @@ public class SignUPScreenController implements Initializable {
         return errorMessage;
     }
 }
+
