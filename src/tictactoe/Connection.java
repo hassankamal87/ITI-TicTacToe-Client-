@@ -37,7 +37,7 @@ public class Connection implements Runnable {
         return instance;
     }
 
-    public void startConnection() {
+    public void startConnection() throws SocketException {
         try {
             server = new Socket("127.0.0.1", 5005);
             dis = new DataInputStream(server.getInputStream());
@@ -45,7 +45,7 @@ public class Connection implements Runnable {
             clientThread = new Thread(this);
             clientThread.start();
         } catch (SocketException ex) {
-            System.out.println("serverClosed");
+            throw new SocketException();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,11 +54,21 @@ public class Connection implements Runnable {
 
     public void closeConnection() {
         try {
-            clientThread.stop();
-            server.close();
+            if (server != null) {
+                clientThread.stop();
+                server.close();
+            }
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public boolean isConnected(){
+        return server != null;
+    }
+    
+    public PrintStream getPrintStream(){
+        return ps;
     }
 
     @Override
@@ -74,13 +84,16 @@ public class Connection implements Runnable {
                     dis.close();
                     ps.close();
                     server.close();
-                    System.out.println("server closed");
+                    System.out.println("server closed from thread");
                     break;
                 } catch (IOException exception) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, exception);
+                    Logger.getLogger(Connection.class
+                            .getName()).log(Level.SEVERE, null, exception);
+
                 }
             } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Connection.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         }

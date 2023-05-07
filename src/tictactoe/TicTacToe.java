@@ -1,9 +1,12 @@
 package tictactoe;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,6 +41,11 @@ public class TicTacToe extends Application {
 
         endSplashScreen(primaryStage, splashRoot, mainScene);
 
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Connection.getInstance().closeConnection();
     }
 
     public static void main(String[] args) {
