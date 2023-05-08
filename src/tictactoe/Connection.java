@@ -30,7 +30,7 @@ public class Connection implements Runnable {
     private Connection() {
     }
 
-    public static Connection getInstance() {
+    public static synchronized Connection getInstance() {
         if (instance == null) {
             instance = new Connection();
         }
@@ -55,6 +55,8 @@ public class Connection implements Runnable {
     public void closeConnection() {
         try {
             if (server != null) {
+                dis.close();
+                ps.close();
                 clientThread.stop();
                 server.close();
             }
@@ -62,12 +64,12 @@ public class Connection implements Runnable {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public boolean isConnected(){
+
+    public boolean isConnected() {
         return server != null;
     }
-    
-    public PrintStream getPrintStream(){
+
+    public PrintStream getPrintStream() {
         return ps;
     }
 
