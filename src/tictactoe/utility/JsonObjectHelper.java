@@ -18,5 +18,7 @@ public class JsonObjectHelper {
     public static final String NAME = "name";
     public static final String PASSWORD = "password";
     
+    public static final String SIGNIN = "singin";
+    
     
 }
