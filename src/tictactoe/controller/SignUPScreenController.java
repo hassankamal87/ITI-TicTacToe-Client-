@@ -80,6 +80,7 @@ public class SignUPScreenController implements Initializable {
             signupObject.put(JsonObjectHelper.NAME, name);
             signupObject.put(JsonObjectHelper.PASSWORD, password);
             new Thread() {
+                @Override
                 public void run() {
                     if (!connection.isConnected()) {
                         try {
@@ -95,7 +96,7 @@ public class SignUPScreenController implements Initializable {
 
                         }
                     }
-
+                    //to avoid exception 
                     if (connection.isConnected()) {
                         connection.getPrintStream().println(signupObject);
                     }
@@ -151,4 +152,3 @@ public class SignUPScreenController implements Initializable {
         return errorMessage;
     }
 }
-
