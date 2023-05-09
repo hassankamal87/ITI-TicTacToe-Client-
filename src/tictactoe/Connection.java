@@ -5,8 +5,10 @@
  */
 package tictactoe;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,13 +21,13 @@ import java.util.logging.Logger;
  *
  * @author Mohamed Adel
  */
-public class Connection implements Runnable {
+public class Connection{
 
     private static Connection instance = null;
     private Socket server;
     private DataInputStream dis;
     private PrintStream ps;
-    private Thread clientThread;
+    private BufferedReader br;
 
     private Connection() {
     }
@@ -42,8 +44,7 @@ public class Connection implements Runnable {
             server = new Socket("127.0.0.1", 5005);
             dis = new DataInputStream(server.getInputStream());
             ps = new PrintStream(server.getOutputStream());
-            clientThread = new Thread(this);
-            clientThread.start();
+            br = new BufferedReader(new InputStreamReader(dis));
         } catch (SocketException ex) {
             throw new SocketException();
         } catch (IOException ex) {
@@ -55,9 +56,6 @@ public class Connection implements Runnable {
     public void closeConnection() {
         try {
             if (server != null) {
-                dis.close();
-                ps.close();
-                clientThread.stop();
                 server.close();
             }
         } catch (IOException ex) {
@@ -72,32 +70,13 @@ public class Connection implements Runnable {
     public PrintStream getPrintStream() {
         return ps;
     }
-
-    @Override
-    public void run() {
-        while (true) {
-
-            try {
-
-                System.out.println(dis.readLine());
-
-            } catch (SocketException ex) {
-                try {
-                    dis.close();
-                    ps.close();
-                    server.close();
-                    System.out.println("server closed from thread");
-                    break;
-                } catch (IOException exception) {
-                    Logger.getLogger(Connection.class
-                            .getName()).log(Level.SEVERE, null, exception);
-
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Connection.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+    
+    public DataInputStream getDataInputStream() {
+        return dis;
     }
+    
+    public BufferedReader getBufferReader(){
+        return br;
+    } 
+
 }
