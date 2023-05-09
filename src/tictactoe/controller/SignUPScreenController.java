@@ -5,7 +5,9 @@
  */
 package tictactoe.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.URL;
@@ -28,6 +30,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import tictactoe.Connection;
 import tictactoe.utility.JsonObjectHelper;
 
@@ -58,20 +62,33 @@ public class SignUPScreenController implements Initializable {
     String password;
     String rePassword;
     Alert alert = new Alert(Alert.AlertType.ERROR);
+    BufferedReader br;
+    Connection connection = Connection.getInstance();
+    JSONObject responseObject = new JSONObject();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    public SignUPScreenController() {
+        new Thread() {
+            public void run() {
+                try {
+                    connection.startConnection();
+                } catch (SocketException ex) {
+
+                }
+            }
+        }.start();
+    }
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
     @FXML
+
     private void signUpHandler(ActionEvent event) {
         /*connect to database*/
-        Connection connection = Connection.getInstance();
-
         String resultString = validation();
         if (resultString == "") {
             JSONObject signupObject = new JSONObject();
@@ -79,27 +96,47 @@ public class SignUPScreenController implements Initializable {
             signupObject.put(JsonObjectHelper.EMAIL, email);
             signupObject.put(JsonObjectHelper.NAME, name);
             signupObject.put(JsonObjectHelper.PASSWORD, password);
-            new Thread() {
-                @Override
-                public void run() {
-                    if (!connection.isConnected()) {
-                        try {
-                            connection.startConnection();
-                        } catch (SocketException ex) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    alert.setContentText("Sorry, Server Is Closed Right Now");
-                                    alert.show();
-                                }
-                            });
 
-                        }
-                    }
-                    //to avoid exception 
-                    if (connection.isConnected()) {
+            new Thread() {
+                public void run() {
+                    if (connection.getPrintStream() != null) {
                         connection.getPrintStream().println(signupObject);
+                        JSONObject jsonRespone;
+                        try {
+
+                            jsonRespone = (JSONObject) new JSONParser().parse(connection.getBufferReader().readLine());
+
+                            switch (jsonRespone.get(JsonObjectHelper.SIGNUP_STATUS).toString()) {
+                                case JsonObjectHelper.SIGNUP_SUCCESS:
+                                    //go to game screen
+                                    break;
+                                case JsonObjectHelper.SIGNUP_FAIL_DUPLICATE:
+                                    //go to game screen
+                                    alert.setContentText("Email Already Exists");
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            alert.show();
+                                        }
+                                    });
+                                    break;
+                            }
+
+                        } catch (IOException ex) {
+                            Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                alert.setContentText("Sorry, Server Is Closed Right Now");
+                                alert.show();
+                            }
+                        });
                     }
+
                 }
             }.start();
 
@@ -146,6 +183,8 @@ public class SignUPScreenController implements Initializable {
             errorMessage = "Enter Valid Email Please";
         } else if (password.length() < 8) {
             errorMessage = "Password can't be less than 8 symbols";
+        } else if (password.length() > 12) {
+            errorMessage = "Password can't be more 12 symbols";
         } else if (!password.equals(rePassword)) {
             errorMessage = "Password and confirm password are not identical";
         }
