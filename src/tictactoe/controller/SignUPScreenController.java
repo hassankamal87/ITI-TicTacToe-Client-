@@ -29,10 +29,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tictactoe.Connection;
+import tictactoe.utility.GameMode;
 import tictactoe.utility.JsonObjectHelper;
 
 /**
@@ -108,7 +110,25 @@ public class SignUPScreenController implements Initializable {
 
                             switch (jsonRespone.get(JsonObjectHelper.SIGNUP_STATUS).toString()) {
                                 case JsonObjectHelper.SIGNUP_SUCCESS:
-                                    //go to game screen
+                                    //go to signin screen
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                alert.setAlertType(Alert.AlertType.INFORMATION);
+                                                alert.setContentText("Signup Successfully");
+                                                alert.showAndWait();
+                                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
+                                                Parent root = loader.load();
+                                                Scene scene = new Scene(root, 610, 410);
+                                                Stage stage = (Stage) signUpBtnUp.getScene().getWindow();
+                                                stage.setScene(scene);
+                                            } catch (IOException ex) {
+                                                Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    });
+
                                     break;
                                 case JsonObjectHelper.SIGNUP_FAIL_DUPLICATE:
                                     //go to game screen
