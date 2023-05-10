@@ -65,14 +65,15 @@ public class SignUPScreenController implements Initializable {
     String rePassword;
     Alert alert = new Alert(Alert.AlertType.ERROR);
     BufferedReader br;
-    Connection connection = Connection.getInstance();
+    Connection connection;
     JSONObject responseObject = new JSONObject();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public SignUPScreenController() {
+    public SignUPScreenController(String ip) {
+        connection = Connection.getInstance(ip);
         new Thread() {
             public void run() {
                 try {

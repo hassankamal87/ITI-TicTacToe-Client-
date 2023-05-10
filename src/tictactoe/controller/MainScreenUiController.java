@@ -33,7 +33,6 @@ import tictactoe.utility.PlayerSympol;
 public class MainScreenUiController implements Initializable {
 
     //private boolean animationPlusFlag = true;
-
     @FXML
     private Button computerBtn;
     @FXML
@@ -50,7 +49,7 @@ public class MainScreenUiController implements Initializable {
     boolean isSignedin = false;
 
     public MainScreenUiController() {
-        
+
     }
 
     /**
@@ -95,20 +94,18 @@ public class MainScreenUiController implements Initializable {
 
     @FXML
     private void checkOnline(MouseEvent event) throws IOException {
-        
+
         if (isSignedin) {
             //user is singed in and can play online
         } else {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
-            Parent pickLevelRoot = loader.load();
-            Scene pickLevelScene = new Scene(pickLevelRoot, 610, 410);
-            Stage primaStage = (Stage) computerBtn.getScene().getWindow();
-            primaStage.setScene(pickLevelScene);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ServerIP.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 610, 410);
+            Stage stage = (Stage) computerBtn.getScene().getWindow();
+            stage.setScene(scene);
         }
     }
-
-
 
 //    private void translate(Node node, double x) {
 //        onlineBtn.setDisable(true);
@@ -120,32 +117,28 @@ public class MainScreenUiController implements Initializable {
 //        translate.play();
 //        onlineBtn.setDisable(false);
 //    }
-
     @FXML
-    private void historyHandler(ActionEvent event) throws Exception{
-        
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameHistoryScreen.fxml"));
-            loader.setControllerFactory(new Callback<Class<?>, Object>() {
-                @Override
-                public Object call(Class<?> clazz) {
-                    if (clazz == GameHistoryScreenController.class) {
-                        return new GameHistoryScreenController();
-                    } else {
-                        try {
-                            return clazz.newInstance();
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
+    private void historyHandler(ActionEvent event) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameHistoryScreen.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == GameHistoryScreenController.class) {
+                    return new GameHistoryScreenController();
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
-            });
-            Parent historyRoot = loader.load();
-            Scene historyScene = new Scene(historyRoot, 610, 410);
-            Stage primaryStage = (Stage) onlineBtn.getScene().getWindow();
-            primaryStage.setScene(historyScene);
-        
-        
+            }
+        });
+        Parent historyRoot = loader.load();
+        Scene historyScene = new Scene(historyRoot, 610, 410);
+        Stage primaryStage = (Stage) onlineBtn.getScene().getWindow();
+        primaryStage.setScene(historyScene);
+
     }
 }
-
-

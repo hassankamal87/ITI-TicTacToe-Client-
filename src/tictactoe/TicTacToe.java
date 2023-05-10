@@ -43,10 +43,10 @@ public class TicTacToe extends Application {
 
     }
 
-    @Override
-    public void stop() throws Exception {
+    //@Override
+   /*public void stop() throws Exception {
         Connection.getInstance().closeConnection();
-    }
+    }*/
 
     public static void main(String[] args) {
         launch(args);

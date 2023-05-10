@@ -28,20 +28,23 @@ public class Connection{
     private DataInputStream dis;
     private PrintStream ps;
     private BufferedReader br;
+    
+    public String ip;
 
-    private Connection() {
+    private Connection(String ip) {
+        this.ip=ip;
     }
 
-    public static synchronized Connection getInstance() {
+    public static synchronized Connection getInstance(String ip) {
         if (instance == null) {
-            instance = new Connection();
+            instance = new Connection(ip);
         }
         return instance;
     }
 
     public void startConnection() throws SocketException {
         try {
-            server = new Socket("127.0.0.1", 5005);
+            server = new Socket(ip, 5005);
             dis = new DataInputStream(server.getInputStream());
             ps = new PrintStream(server.getOutputStream());
             br = new BufferedReader(new InputStreamReader(dis));
@@ -61,6 +64,10 @@ public class Connection{
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void close() throws IOException{
+        server.close();
     }
 
     public boolean isConnected() {
