@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.GameHistoryScreenController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.GameHistoryScreenController">
    <children>
       <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
@@ -19,11 +19,11 @@
             <Font name="Cooper Black" size="43.0" />
          </font>
       </Text>
-      <ImageView fitHeight="49.0" fitWidth="48.0" layoutX="14.0" layoutY="348.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backBtn" fitHeight="49.0" fitWidth="48.0" layoutX="14.0" layoutY="348.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/back.png" />
          </image>
       </ImageView>
-      <ListView fx:id="listItemHolder" layoutX="81.0" layoutY="63.0" prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent;" />
+      <ListView fx:id="listItemHolder" layoutX="68.0" layoutY="63.0" prefHeight="300.0" prefWidth="529.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent;" />
    </children>
 </AnchorPane>

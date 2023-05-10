@@ -8,6 +8,8 @@ package tictactoe.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +18,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import tictactoe.utility.GameMode;
+import tictactoe.utility.PlayerSympol;
 
 /**
  * FXML Controller class
@@ -46,7 +50,7 @@ public class MainScreenUiController implements Initializable {
     boolean isSignedin = false;
 
     public MainScreenUiController() {
-
+        
     }
 
     /**
@@ -91,6 +95,7 @@ public class MainScreenUiController implements Initializable {
 
     @FXML
     private void checkOnline(MouseEvent event) throws IOException {
+        
         if (isSignedin) {
             //user is singed in and can play online
         } else {
@@ -104,9 +109,6 @@ public class MainScreenUiController implements Initializable {
     }
 
 
-    @FXML
-    private void historyHandler(ActionEvent event) {
-    }
 
 //    private void translate(Node node, double x) {
 //        onlineBtn.setDisable(true);
@@ -118,4 +120,32 @@ public class MainScreenUiController implements Initializable {
 //        translate.play();
 //        onlineBtn.setDisable(false);
 //    }
+
+    @FXML
+    private void historyHandler(ActionEvent event) throws Exception{
+        
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameHistoryScreen.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    if (clazz == GameHistoryScreenController.class) {
+                        return new GameHistoryScreenController();
+                    } else {
+                        try {
+                            return clazz.newInstance();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            });
+            Parent historyRoot = loader.load();
+            Scene historyScene = new Scene(historyRoot, 610, 410);
+            Stage primaryStage = (Stage) onlineBtn.getScene().getWindow();
+            primaryStage.setScene(historyScene);
+        
+        
+    }
 }
+
+

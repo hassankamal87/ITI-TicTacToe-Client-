@@ -5,6 +5,9 @@
  */
 package tictactoe.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,8 +23,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import tictactoe.utility.GameMode;
 
 /**
  * FXML Controller class
@@ -33,27 +39,51 @@ public class GameHistoryScreenController implements Initializable {
     @FXML
     private ListView<?> listItemHolder;
 
+    @FXML
+    private ImageView backBtn;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        try {
-            // TODO
-            
-            ArrayList<Node> list = new ArrayList();
-            for(int i = 0 ; i < 30 ; i++){
+
+        File recordPackage = new File(".\\src\\tictactoe\\recordingFile");
+        String[] listOfFileNames = recordPackage.list();
+        ArrayList<Node> list = new ArrayList();
+
+        for(String fileName : listOfFileNames){
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/HistoryItemHolder.fxml"));
+                loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                    @Override
+                    public Object call(Class<?> clazz) {
+                        if (clazz == HistoryItemHolderController.class) {
+                            return new HistoryItemHolderController(fileName);
+                        } else {
+                            try {
+                                return clazz.newInstance();
+                            } catch (Exception ex) {
+                                System.out.println("here");
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }
+                });
+        
+                
                 Node node = loader.load();
                 list.add(node);
+            } catch (IOException ex) {
+                System.out.println(ex.toString());
             }
-            ObservableList items = FXCollections.observableArrayList(list);
-            listItemHolder.setItems(items);
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+        if(listOfFileNames.length!=0){
+        ObservableList items = FXCollections.observableArrayList(list);
+        listItemHolder.setItems(items);}
+
+        
+    }
 
     @FXML
     private void goBack(MouseEvent event) {
@@ -67,5 +97,5 @@ public class GameHistoryScreenController implements Initializable {
             Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

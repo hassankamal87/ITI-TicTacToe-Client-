@@ -10,5 +10,5 @@ package tictactoe.utility;
  * @author Mohamed Adel
  */
 public enum GameMode {
-    computer , multiplayer , online
+    computer , multiplayer , online, record
 }

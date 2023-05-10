@@ -1,14 +1,22 @@
 package tictactoe.controller;
 
+import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,9 +33,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import javax.swing.Timer;
 import tictactoe.Result;
 import tictactoe.utility.GameLevel;
 import tictactoe.utility.GameMode;
@@ -85,8 +95,11 @@ public class GameScreenController implements Initializable {
 
     private ArrayList<Button> listOfButtons;
     private ArrayList<Button> avaiableList;
-    Image xImg;
-    Image oImg;
+    private String moveString = "";
+    private String recordedGame;
+    private String currentTime;
+    private Image xImg;
+    private Image oImg;
     private int currentNumber;
 
     SequentialTransition sequentialTransition;
@@ -102,6 +115,13 @@ public class GameScreenController implements Initializable {
     @FXML
     private AnchorPane containerPane;
     private Result result;
+
+    public GameScreenController(GameMode gameMode, String recordedGame) {
+        this.gameMode = gameMode;
+        this.playerSympol = PlayerSympol.X;
+        this.recordedGame = recordedGame;
+
+    }
 
     public GameScreenController(GameMode gameMode) {
         this.gameMode = gameMode;
@@ -125,10 +145,14 @@ public class GameScreenController implements Initializable {
         this.gameLevel = result.getLevel();
         this.leftSideScore = result.getLeftSideScore();
         this.rightSideScore = result.getRightSideScore();
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        moveString += playerSympol.toString() + "." + gameMode.toString() + ".";
+        currentTime = LocalTime.now().toString().replace('.', '_');
+        currentTime = currentTime.replace(':', '_');
         currentNumber = 1;
         xImg = new Image("tictactoe/assets/xBoard.png");
         oImg = new Image("tictactoe/assets/oBoard.png");
@@ -159,6 +183,8 @@ public class GameScreenController implements Initializable {
             multiplayerMode();
         } else if (gameMode == GameMode.online) {
             System.out.println("online");
+        } else if (gameMode == GameMode.record) {
+            recordMode();
         }
     }
 
@@ -170,14 +196,43 @@ public class GameScreenController implements Initializable {
             easyMove();
         }
 
-        for (Button button : listOfButtons) {
-            button.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+        for (int i = 0; i < listOfButtons.size(); i++) {
+            Button button = listOfButtons.get(i);
+            listOfButtons.get(i).addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     drawShapeForComputer(button);
                 }
             });
         }
+    }
+
+    private void recordMode() {
+        int increment = 1;
+        leftNumber.setVisible(false);
+        rightNumber.setVisible(false);
+        String[] recordList = recordedGame.split("\\.");
+        if (recordList[0] == PlayerSympol.X.toString()) {
+            leftName.setText(recordList[1]);
+        } else {
+            rightName.setText(recordList[1]);
+            leftName.setText("YOU");
+        }
+
+        Timeline timeLine = new Timeline();
+        timeLine.setCycleCount(recordList.length - 2);
+        timeLine.getKeyFrames().add(new KeyFrame(Duration.millis(1000), event -> {
+            if (currentNumber % 2 != 0) {
+                drawOorX(listOfButtons.get(Integer.parseInt(recordList[currentNumber + 1])), PlayerSympol.X);
+            } else if (currentNumber % 2 == 0) {
+                drawOorX(listOfButtons.get(Integer.parseInt(recordList[currentNumber + 1])), PlayerSympol.O);
+            }
+
+            currentNumber++;
+            checkWin();
+        }));
+        timeLine.play();
+
     }
 
     @FXML
@@ -212,8 +267,9 @@ public class GameScreenController implements Initializable {
     private void multiplayerMode() {
         gameKindTextView.setText(gameMode.toString());
 
-        for (Button button : listOfButtons) {
-            button.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+        for (int i = 0; i < listOfButtons.size(); i++) {
+            Button button = listOfButtons.get(i);
+            listOfButtons.get(i).addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     drawShapeForMultiPlayerMode(button);
@@ -259,6 +315,7 @@ public class GameScreenController implements Initializable {
     }
 
     private void drawOorX(Button btn, PlayerSympol sympol) {
+        moveString += listOfButtons.indexOf(btn) + ".";
         ImageView oImageView = new ImageView(oImg);
         ImageView xImageView = new ImageView(xImg);
 
@@ -322,7 +379,7 @@ public class GameScreenController implements Initializable {
             animateResultAndGoToResult();
             return;
         }
-        if (avaiableList.size() == 0 && matchStatus != WIN) {
+        if (avaiableList.size() == 0 && matchStatus != WIN&&gameMode!= GameMode.record) {
             System.out.println("draw");
             matchStatus = DRAW;
             resultScreen();
@@ -353,7 +410,8 @@ public class GameScreenController implements Initializable {
         sequentialTransition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                resultScreen();
+                if(gameMode != GameMode.record)
+                     resultScreen();
             }
         });
         sequentialTransition.play();
@@ -361,6 +419,7 @@ public class GameScreenController implements Initializable {
 
     private void resultScreen() {
 
+        saveGameInFile();
         try {
             getMatchStatus();
             result = new Result(gameMode, gameLevel, playerSympol, matchStatus, leftSideScore, rightSideScore);
@@ -412,5 +471,42 @@ public class GameScreenController implements Initializable {
         } else {
             matchStatus = DRAW;
         }
+    }
+
+    private void saveGameInFile() {
+        if (gameMode != GameMode.record) {
+
+            File file2 = new File(".\\src\\tictactoe\\recordingFile");
+            if (!file2.exists()) {
+                file2.mkdir();
+            }
+
+            File video = new File(".\\src\\tictactoe\\recordingFile\\" + gameMode + currentTime + ".txt");
+
+            if (!video.exists()) {
+                try {
+                    if (video.createNewFile()) {
+                        System.out.println("creation Done");
+                    } else {
+                        System.out.println("Faild");
+                    }
+                } catch (IOException ex) {
+                    System.out.println(ex.toString());
+                    Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream(video);
+                byte[] b = moveString.getBytes();
+                fos.write(b);
+                fos.flush();
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+
     }
 }

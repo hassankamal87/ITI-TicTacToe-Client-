@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.MainScreenUiController">
+<AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.MainScreenUiController">
    <children>
       <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
@@ -79,7 +79,7 @@
             </HBox>
          </graphic>
       </Button>
-      <Button fx:id="historyBtn" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="14.0" layoutY="356.0" mnemonicParsing="false" onAction="#historyHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="History" textAlignment="CENTER">
+      <Button fx:id="historyBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="356.0" mnemonicParsing="false" onAction="#historyHandler" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #666666;" text="History" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
