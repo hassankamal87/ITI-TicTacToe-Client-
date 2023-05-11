@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import tictactoe.Connection;
 
 /**
  * FXML Controller class
@@ -32,10 +33,11 @@ public class OnlineFriendListScreenController implements Initializable {
 
     @FXML
     private ListView<?> listItemHolder;
+    Connection connection;
 
     public OnlineFriendListScreenController() {
     }
-    
+
     /**
      * Initializes the controller class.
      */
@@ -43,9 +45,9 @@ public class OnlineFriendListScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             // TODO
-            
+
             ArrayList<Node> list = new ArrayList();
-            for(int i = 0 ; i < 30 ; i++){
+            for (int i = 0; i < 30; i++) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineItemHolder.fxml"));
                 Node node = loader.load();
                 list.add(node);
@@ -55,19 +57,19 @@ public class OnlineFriendListScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 
     @FXML
     private void goBack(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root,610,410);
+            Scene scene = new Scene(root, 610, 410);
             Stage stage = (Stage) listItemHolder.getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

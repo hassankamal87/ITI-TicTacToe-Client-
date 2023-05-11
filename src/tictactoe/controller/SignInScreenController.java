@@ -121,34 +121,12 @@ public class SignInScreenController implements Initializable {
 
                             switch (jsonRespone.get(JsonObjectHelper.SIGNIN_STATUS).toString()) {
                                 case JsonObjectHelper.SIGNUP_SUCCESS:
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineFriendListScreen.fxml"));
-                                                Parent root = loader.load();
-                                                Scene scene = new Scene(root, 610, 410);
-                                                Stage stage = (Stage) signInBtn.getScene().getWindow();
-                                                stage.setScene(scene);
-                                            } catch (IOException ex) {
-                                                Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
-                                    });
-
+                                    signIpSuccess();
                                     break;
                                 case JsonObjectHelper.SIGNIN_FAIL:
-                                    //go to game screen
-                                    alert.setContentText("Wrong Email or Password");
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            alert.show();
-                                        }
-                                    });
+                                    signInFail();
                                     break;
                             }
-
                         } catch (IOException ex) {
                             Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ParseException ex) {
@@ -186,19 +164,19 @@ public class SignInScreenController implements Initializable {
     private void goToSignup(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignUPScreen.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
-                @Override
-                public Object call(Class<?> clazz) {
-                    if (clazz == SignUPScreenController.class) {
-                        return new SignUPScreenController(ip);
-                    } else {
-                        try {
-                            return clazz.newInstance();
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == SignUPScreenController.class) {
+                    return new SignUPScreenController(ip);
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
-            });
+            }
+        });
         Parent root = loader.load();
         Scene scene = new Scene(root, 610, 410);
         Stage stage = (Stage) backBtn.getScene().getWindow();
@@ -222,6 +200,42 @@ public class SignInScreenController implements Initializable {
             errorMessage = "Password can't be less than 8 symbols";
         }
         return errorMessage;
+    }
+
+    private void signIpSuccess() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineFriendListScreen.fxml"));
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root, 610, 410);
+                    Stage stage = (Stage) signInBtn.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setOnCloseRequest(event -> {
+                        if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (IOException ex) {
+                                Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+                } catch (IOException ex) {
+                    Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    private void signInFail() {
+        alert.setContentText("Wrong Email or Password");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                alert.show();
+            }
+        });
     }
 
 }
