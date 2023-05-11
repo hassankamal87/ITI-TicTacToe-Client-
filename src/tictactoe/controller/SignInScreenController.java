@@ -9,6 +9,7 @@ import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.SocketException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,12 +59,15 @@ public class SignInScreenController implements Initializable {
     String resultString;
     JSONObject signinObject = new JSONObject();
     String ip;
+    private ArrayList<Player> Players;
+    boolean thereIsPlayers = true;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Players = new ArrayList<Player>();
     }
 
     public SignInScreenController() {
@@ -115,22 +119,45 @@ public class SignInScreenController implements Initializable {
                     if (connection.getPrintStream() != null) {
                         connection.getPrintStream().println(signinObject);
                         JSONObject jsonRespone;
+                        JSONObject jsonOnlineListPlayer;
                         try {
 
                             jsonRespone = (JSONObject) new JSONParser().parse(connection.getBufferReader().readLine());
 
                             switch (jsonRespone.get(JsonObjectHelper.SIGNIN_STATUS).toString()) {
-                                case JsonObjectHelper.SIGNUP_SUCCESS:
-                                    signIpSuccess();
+                                case JsonObjectHelper.SIGNIN_SUCCESS:
+                                    while (thereIsPlayers) {
+
+                                        jsonOnlineListPlayer = (JSONObject) new JSONParser().parse(connection.getBufferReader().readLine());
+                                        if (jsonOnlineListPlayer != null) {
+                                            switch (jsonOnlineListPlayer.get(JsonObjectHelper.HEADER).toString()) {
+                                                case "list":
+                                                    System.out.println(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString() + "   in switch");
+                                                    
+                                                     Player onLinePlayer = new Player(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString(), jsonOnlineListPlayer.get(JsonObjectHelper.EMAIL).toString());
+                                                    if(onLinePlayer.getEmail().equals(email) == false)
+                                                        Players.add(onLinePlayer);
+
+                                                    break;
+                                                case "end":
+                                                    System.out.println("end");
+                                                    thereIsPlayers = false;
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    goToOnlineList();
                                     break;
                                 case JsonObjectHelper.SIGNIN_FAIL:
                                     signInFail();
                                     break;
                             }
                         } catch (IOException ex) {
-                            Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(ex.toString());
+                            //   Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ParseException ex) {
-                            Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(ex.toString());
+                            // Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else {
                         Platform.runLater(new Runnable() {
@@ -202,38 +229,50 @@ public class SignInScreenController implements Initializable {
         return errorMessage;
     }
 
-    private void signIpSuccess() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineFriendListScreen.fxml"));
-                    Parent root = loader.load();
-                    Scene scene = new Scene(root, 610, 410);
-                    Stage stage = (Stage) signInBtn.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.setOnCloseRequest(event -> {
-                        if (connection != null) {
-                            try {
-                                connection.close();
-                            } catch (IOException ex) {
-                                Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    });
-                } catch (IOException ex) {
-                    Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
     private void signInFail() {
         alert.setContentText("Wrong Email or Password");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 alert.show();
+            }
+        });
+    }
+
+    private void goToOnlineList() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineFriendListScreen.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == OnlineFriendListScreenController.class) {
+                    return new OnlineFriendListScreenController(Players);
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        Parent onlineFriendListRoot = loader.load();
+        Scene onlineFriendListScene = new Scene(onlineFriendListRoot, 610, 410);
+        Stage primaryStage = (Stage) backBtn.getScene().getWindow();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                primaryStage.setScene(onlineFriendListScene);
+            }
+        });
+
+        primaryStage.setOnCloseRequest(event -> {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

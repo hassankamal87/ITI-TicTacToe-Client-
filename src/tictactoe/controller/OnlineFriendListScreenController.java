@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import tictactoe.Connection;
 
 /**
@@ -30,12 +31,12 @@ import tictactoe.Connection;
  * @author Mohamed Adel
  */
 public class OnlineFriendListScreenController implements Initializable {
-
-    @FXML
+@FXML
     private ListView<?> listItemHolder;
-    Connection connection;
+    ArrayList<Player> players;
 
-    public OnlineFriendListScreenController() {
+    public OnlineFriendListScreenController(ArrayList<Player> players) {
+        this.players = players;
     }
 
     /**
@@ -43,7 +44,40 @@ public class OnlineFriendListScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
+
+        
+        ArrayList<Node> list = new ArrayList();
+
+        for (Player p : players) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineItemHolder.fxml"));
+                loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                    @Override
+                    public Object call(Class<?> clazz) {
+                        if (clazz == OnlineItemHolderController.class) {
+                            return new OnlineItemHolderController(p);
+                        } else {
+                            try {
+                                return clazz.newInstance();
+                            } catch (Exception ex) {
+                                System.out.println("here");
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }
+                });
+
+                Node node = loader.load();
+                list.add(node);
+            } catch (IOException ex) {
+                System.out.println(ex.toString());
+            }
+        }
+        if (players.size() != 0) {
+            ObservableList items = FXCollections.observableArrayList(list);
+            listItemHolder.setItems(items);
+        }
+        /*try {
             // TODO
 
             ArrayList<Node> list = new ArrayList();
@@ -56,7 +90,7 @@ public class OnlineFriendListScreenController implements Initializable {
             listItemHolder.setItems(items);
         } catch (IOException ex) {
             Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     @FXML
@@ -70,6 +104,10 @@ public class OnlineFriendListScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void getOnLineScreenFromServer() {
+
     }
 
 }

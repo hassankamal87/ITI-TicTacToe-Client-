@@ -21,18 +21,28 @@ public class OnlineItemHolderController implements Initializable {
 
     @FXML
     private Label playerName;
-
+    @FXML
+    private Label email;
+    
+    String name;
+    String playerEmail;
+    
+    public OnlineItemHolderController(Player player){
+        this.name = player.getName();
+        this.playerEmail = player.getEmail();
+    }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        playerName.setText(name);
+        email.setText(playerEmail);
     }    
 
     @FXML
     private void inviteFriend(ActionEvent event) {
+        //send Request
         System.out.println("invite clicked");
     }
-    
 }
