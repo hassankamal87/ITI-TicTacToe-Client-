@@ -71,12 +71,14 @@ public class SignInScreenController implements Initializable {
     }
 
     public SignInScreenController() {
-        connection = Connection.getInstance(ip);
+        connection = Connection.getInstance();
+        connection.setIp(ip);
     }
 
     public SignInScreenController(String ip) {
         this.ip = ip;
-        connection = Connection.getInstance(ip);
+        connection = Connection.getInstance();
+        connection.setIp(ip);
         new Thread() {
             @Override
             public void run() {
@@ -132,7 +134,7 @@ public class SignInScreenController implements Initializable {
                                         if (jsonOnlineListPlayer != null) {
                                             switch (jsonOnlineListPlayer.get(JsonObjectHelper.HEADER).toString()) {
                                                 case "list":
-                                                    System.out.println(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString() + "   in switch");
+                                                    //System.out.println(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString() + "   in switch");
                                                     
                                                      Player onLinePlayer = new Player(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString(), jsonOnlineListPlayer.get(JsonObjectHelper.EMAIL).toString());
                                                     if(onLinePlayer.getEmail().equals(email) == false)
@@ -246,7 +248,7 @@ public class SignInScreenController implements Initializable {
             @Override
             public Object call(Class<?> clazz) {
                 if (clazz == OnlineFriendListScreenController.class) {
-                    return new OnlineFriendListScreenController(Players);
+                    return new OnlineFriendListScreenController(Players,email);
                 } else {
                     try {
                         return clazz.newInstance();

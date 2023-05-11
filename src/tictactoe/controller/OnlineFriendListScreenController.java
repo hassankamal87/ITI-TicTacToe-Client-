@@ -34,9 +34,11 @@ public class OnlineFriendListScreenController implements Initializable {
 @FXML
     private ListView<?> listItemHolder;
     ArrayList<Player> players;
+    String myEmail;
 
-    public OnlineFriendListScreenController(ArrayList<Player> players) {
+    public OnlineFriendListScreenController(ArrayList<Player> players, String myEmail) {
         this.players = players;
+        this.myEmail = myEmail;
     }
 
     /**
@@ -55,7 +57,7 @@ public class OnlineFriendListScreenController implements Initializable {
                     @Override
                     public Object call(Class<?> clazz) {
                         if (clazz == OnlineItemHolderController.class) {
-                            return new OnlineItemHolderController(p);
+                            return new OnlineItemHolderController(p,myEmail);
                         } else {
                             try {
                                 return clazz.newInstance();

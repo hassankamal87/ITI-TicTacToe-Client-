@@ -31,17 +31,22 @@ public class Connection{
     
     public String ip;
 
-    private Connection(String ip) {
-        this.ip=ip;
+    private Connection() {
+        
     }
+    
+    
 
-    public static synchronized Connection getInstance(String ip) {
+    public static synchronized Connection getInstance() {
         if (instance == null) {
-            instance = new Connection(ip);
+            instance = new Connection();
         }
         return instance;
     }
 
+    public void setIp(String ip){
+        this.ip = ip;
+    }
     public void startConnection() throws SocketException {
         try {
             server = new Socket(ip, 5005);
