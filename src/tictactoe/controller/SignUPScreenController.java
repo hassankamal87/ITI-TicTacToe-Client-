@@ -74,16 +74,6 @@ public class SignUPScreenController implements Initializable {
 
     public SignUPScreenController(String ip) {
         connection = Connection.getInstance();
-        connection.setIp(ip);
-        new Thread() {
-            public void run() {
-                try {
-                    connection.startConnection();
-                } catch (SocketException ex) {
-
-                }
-            }
-        }.start();
     }
 
     /**

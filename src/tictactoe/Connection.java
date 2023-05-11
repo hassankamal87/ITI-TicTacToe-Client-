@@ -16,6 +16,7 @@ import java.net.SocketException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
 public class Connection{
 
     private static Connection instance = null;
-    private Socket server;
+    private Socket server = null;
     private DataInputStream dis;
     private PrintStream ps;
     private BufferedReader br;
@@ -47,16 +48,19 @@ public class Connection{
     public void setIp(String ip){
         this.ip = ip;
     }
-    public void startConnection() throws SocketException {
+    public boolean startConnection() throws IOException{
         try {
             server = new Socket(ip, 5005);
             dis = new DataInputStream(server.getInputStream());
             ps = new PrintStream(server.getOutputStream());
             br = new BufferedReader(new InputStreamReader(dis));
+            return true;
         } catch (SocketException ex) {
-            throw new SocketException();
+            new MyAlert(Alert.AlertType.ERROR, "please enter valid IP").show();
+            return false;
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            new MyAlert(Alert.AlertType.ERROR, "please enter valid IP").show();
+            return false;
         }
 
     }
@@ -76,7 +80,11 @@ public class Connection{
     }
 
     public boolean isConnected() {
-        return server != null;
+        if(server == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public PrintStream getPrintStream() {

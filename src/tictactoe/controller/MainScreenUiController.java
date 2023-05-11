@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import tictactoe.Connection;
 import tictactoe.utility.GameMode;
 import tictactoe.utility.PlayerSympol;
 
@@ -46,7 +47,7 @@ public class MainScreenUiController implements Initializable {
     @FXML
     private Text UsernameTxt;
 
-    boolean isSignedin = false;
+    Connection connection;
 
     public MainScreenUiController() {
 
@@ -94,9 +95,28 @@ public class MainScreenUiController implements Initializable {
 
     @FXML
     private void checkOnline(MouseEvent event) throws IOException {
+        connection = Connection.getInstance();
+        if (connection.isConnected()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    if (clazz == SignInScreenController.class) {
 
-        if (isSignedin) {
-            //user is singed in and can play online
+                        return new SignInScreenController();
+                    } else {
+                        try {
+                            return clazz.newInstance();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            });
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 610, 410);
+            Stage stage = (Stage) localBtn.getScene().getWindow();
+            stage.setScene(scene);
         } else {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/ServerIP.fxml"));

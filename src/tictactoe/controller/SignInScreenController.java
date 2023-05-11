@@ -70,16 +70,11 @@ public class SignInScreenController implements Initializable {
         Players = new ArrayList<Player>();
     }
 
+    
+
     public SignInScreenController() {
         connection = Connection.getInstance();
-        connection.setIp(ip);
-    }
-
-    public SignInScreenController(String ip) {
-        this.ip = ip;
-        connection = Connection.getInstance();
-        connection.setIp(ip);
-        new Thread() {
+        /*new Thread() {
             @Override
             public void run() {
                 if (!connection.isConnected()) {
@@ -105,7 +100,7 @@ public class SignInScreenController implements Initializable {
                     }
                 }
             }
-        }.start();
+        }.start();*/
     }
 
     @FXML
