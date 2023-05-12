@@ -7,9 +7,11 @@ package tictactoe.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,9 +50,15 @@ public class MainScreenUiController implements Initializable {
     private Text UsernameTxt;
 
     Connection connection;
+    ArrayList<Player> players = null;
+    String email = null;
 
     public MainScreenUiController() {
 
+    }
+    public MainScreenUiController(ArrayList<Player> players, String email) {
+        this.players = players;
+        this.email = email;
     }
 
     /**
@@ -96,7 +104,10 @@ public class MainScreenUiController implements Initializable {
     @FXML
     private void checkOnline(MouseEvent event) throws IOException {
         connection = Connection.getInstance();
-        if (connection.isConnected()) {
+        if(email!=null&&players != null){
+            goToOnlineList();
+        }
+        else if (connection.isConnected()&&email == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
@@ -160,5 +171,44 @@ public class MainScreenUiController implements Initializable {
         Stage primaryStage = (Stage) onlineBtn.getScene().getWindow();
         primaryStage.setScene(historyScene);
 
+    }
+    
+    
+    private void goToOnlineList() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/OnlineFriendListScreen.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> clazz) {
+                if (clazz == OnlineFriendListScreenController.class) {
+                    return new OnlineFriendListScreenController(players,email);
+                } else {
+                    try {
+                        return clazz.newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        Parent onlineFriendListRoot = loader.load();
+        Scene onlineFriendListScene = new Scene(onlineFriendListRoot, 610, 410);
+        Stage primaryStage = (Stage) onlineBtn.getScene().getWindow();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                primaryStage.setScene(onlineFriendListScene);
+            }
+        });
+
+        primaryStage.setOnCloseRequest(event -> {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineFriendListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 }

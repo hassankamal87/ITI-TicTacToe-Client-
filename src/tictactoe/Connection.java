@@ -71,6 +71,7 @@ public class Connection{
                 server.close();
             }
         } catch (IOException ex) {
+            System.out.println("Connection class in line 74");
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
