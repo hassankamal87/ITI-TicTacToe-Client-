@@ -16,39 +16,49 @@ import java.net.SocketException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogEvent;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import tictactoe.utility.JsonObjectHelper;
 
 /**
  *
  * @author Mohamed Adel
  */
-public class Connection{
-
+public class Connection {
+    
     private static Connection instance = null;
     private Socket server = null;
     private DataInputStream dis;
     private PrintStream ps;
     private BufferedReader br;
+    Thread clientThread;
+    JSONObject serverJson;
     
     public String ip;
-
+    
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    
     private Connection() {
         
     }
     
-    
-
     public static synchronized Connection getInstance() {
         if (instance == null) {
             instance = new Connection();
         }
         return instance;
     }
-
-    public void setIp(String ip){
+    
+    public void setIp(String ip) {
         this.ip = ip;
     }
-    public boolean startConnection() throws IOException{
+    
+    public boolean startConnection() throws IOException {
         try {
             server = new Socket(ip, 5005);
             dis = new DataInputStream(server.getInputStream());
@@ -62,13 +72,14 @@ public class Connection{
             new MyAlert(Alert.AlertType.ERROR, "please enter valid IP").show();
             return false;
         }
-
+        
     }
-
+    
     public void closeConnection() {
         try {
             if (server != null) {
                 server.close();
+                clientThread.stop();
             }
         } catch (IOException ex) {
             System.out.println("Connection class in line 74");
@@ -76,18 +87,18 @@ public class Connection{
         }
     }
     
-    public void close() throws IOException{
+    public void close() throws IOException {
         server.close();
     }
-
+    
     public boolean isConnected() {
-        if(server == null){
+        if (server == null) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-
+    
     public PrintStream getPrintStream() {
         return ps;
     }
@@ -96,8 +107,93 @@ public class Connection{
         return dis;
     }
     
-    public BufferedReader getBufferReader(){
+    public BufferedReader getBufferReader() {
         return br;
-    } 
-
+    }
+    
+    public JSONObject readMessage() {
+        JSONObject response = null;
+        try {
+            response = (JSONObject) new JSONParser().parse(br.readLine());
+        } catch (IOException ex) {
+            try {
+                closeStreams();
+            } catch (IOException ex1) {
+                System.out.println("not closed in 129");
+            }
+            
+        } catch (ParseException ex) {
+            System.out.println("connection line 133");
+            
+        } catch (NullPointerException e) {
+            System.out.println("connection handler 136");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    new MyAlert(Alert.AlertType.WARNING, " server is Down").show();
+                }
+            });
+            System.out.println("connection line 144");
+            try {
+                closeStreams();
+            } catch (IOException ex1) {
+                
+            }
+        }
+        System.out.println("line 141 connetion " + response);
+        return response;
+    }
+    
+    private void closeStreams() throws IOException {
+        System.out.println("streams closed done");
+        dis.close();
+        ps.close();
+        br.close();
+    }
+    
+    public void startReceiveInvitation() {
+        System.err.println("startReceiveInvitation");
+        if (clientThread == null) {
+            clientThread = new Thread() {
+                public void run() {
+                    while (true) {
+                        try {
+                            serverJson = readMessage();
+                        } catch (NullPointerException ex) {
+                            System.out.println("connection line 66");
+                            break;
+                        }
+                        if (serverJson != null) {
+                            String header = (String) serverJson.get(JsonObjectHelper.HEADER);
+                            System.out.println(header);
+                            switch (header) {
+                                case JsonObjectHelper.INVITATION:
+                                    //recieve invite server logic
+                                    alert.setContentText(serverJson.get(JsonObjectHelper.SENDER).toString() + " Wants to play with you");
+                                    alert.setTitle("Invitation");
+                                    alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+                                        @Override
+                                        public void handle(DialogEvent event) {
+                                        }
+                                    });
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            alert.showAndWait();
+                                        }
+                                    });
+                                    break;
+                            }
+                        } else {
+                            
+                            break;
+                        }
+                    }
+                }
+            };
+        }
+        
+        clientThread.start();
+    }
+    
 }
