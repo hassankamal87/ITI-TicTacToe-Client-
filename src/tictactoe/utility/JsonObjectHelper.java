@@ -24,6 +24,8 @@ public class JsonObjectHelper {
     public static final String SIGNIN_STATUS = "status";
     public static final String SIGNIN_FAIL = "wrongInfo";
     public static final String SIGNIN_SUCCESS = "success";
-    
+    public static final String SEND = "send";
+    public static final String SENDER = "sender";
+    public static final String RECEIVER = "receiver";
 
 }

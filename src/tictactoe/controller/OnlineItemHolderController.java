@@ -44,6 +44,7 @@ public class OnlineItemHolderController implements Initializable {
         this.name = player.getName();
         this.playerEmail = player.getEmail();
         this.myEmail = myEmail;
+        System.out.println(playerEmail+"OnlineItemHolderController");
     }
     /**
      * Initializes the controller class.
@@ -61,14 +62,17 @@ public class OnlineItemHolderController implements Initializable {
         System.out.println("invite clicked");
         
         
-        
-            sendObject.put(JsonObjectHelper.HEADER, "send");
-            sendObject.put("sender", myEmail);
-            sendObject.put("receiver", email);
+        sendObject.clear();
+            sendObject.put(JsonObjectHelper.HEADER, JsonObjectHelper.SEND);
+            sendObject.put(JsonObjectHelper.SENDER, myEmail);
+            sendObject.put(JsonObjectHelper.RECEIVER, email.getText().toString());
+            System.out.println(sendObject.toJSONString()+"inviteFriend");
+            System.out.println(sendObject.get(JsonObjectHelper.SENDER)+"inviteFriend");
 
             new Thread() {
                 public void run() {
                     if (connection.getPrintStream() != null) {
+                        System.out.println(sendObject.toJSONString());
                         connection.getPrintStream().println(sendObject);
                         System.out.println("donnee");
                         
