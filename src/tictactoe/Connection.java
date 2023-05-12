@@ -171,14 +171,14 @@ public class Connection {
     }
 
     private void closeStreams() throws IOException {
-        
+        System.out.println("streams closed done");
         dis.close();
         ps.close();
         br.close();
     }
 
     public void startReceiveInvitation() {
-        
+        System.out.println("startReceiveInvitation");
         if (clientThread == null) {
             clientThread = new Thread() {
                 public void run() {
@@ -191,7 +191,7 @@ public class Connection {
                         }
                         if (serverJson != null) {
                             String header = (String) serverJson.get(JsonObjectHelper.HEADER);
-                            
+                            System.out.println(header);
                             switch (header) {
                                 case JsonObjectHelper.INVITATION:
                                     //recieve invite server logic
@@ -206,7 +206,7 @@ public class Connection {
                                             clientJson = new JSONObject();
                                             if (result.isPresent() && result.get() == acceptBtn) {
                                                 goToOnlineGameScreen();
-                                                clientJson.put(JsonObjectHelper.HEADER, JsonObjectHelper.ACCEPTANCE);
+                                                clientJson.put("header", "accept");
                                                 clientJson.put(JsonObjectHelper.EMAIL, serverJson.get(JsonObjectHelper.SENDER).toString());
                                                 ps.println(clientJson);
                                             } else if (result.isPresent() && result.get() == rejectButton) {
@@ -218,7 +218,7 @@ public class Connection {
                                     });
                                     break;
                                 case "refuse":
-                                    refuseAlert.setContentText(" " + serverJson.get(JsonObjectHelper.SENDER) + " can't play right now");
+                                    refuseAlert.setContentText(" " + serverJson.get(JsonObjectHelper.EMAIL) + " can't play right now");
                                     refuseAlert.setTitle("SORRY");
                                     Platform.runLater(new Runnable() {
                                         @Override
@@ -232,14 +232,14 @@ public class Connection {
                                     });
                                     break;
                                 case "accept":
-                                    acceptAlert.setContentText(" " + serverJson.get(JsonObjectHelper.SENDER) + " Accepted your invitation ");
+                                    acceptAlert.setContentText(" " + serverJson.get(JsonObjectHelper.EMAIL) + " Accepted your invitation ");
                                     acceptAlert.setTitle("ACCEPTED");
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
                                             Optional<ButtonType> result = acceptAlert.showAndWait();
                                             clientJson = new JSONObject();
-                                            if (result.isPresent() && result.get() == okBtn) {
+                                            if (result.isPresent() && result.get() == startBtn) {
                                                 goToOnlineGameScreen();
                                             }
                                         }
