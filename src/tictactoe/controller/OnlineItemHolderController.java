@@ -62,7 +62,7 @@ public class OnlineItemHolderController implements Initializable {
         System.out.println("invite clicked");
         
         
-        sendObject.clear();
+            sendObject.clear();
             sendObject.put(JsonObjectHelper.HEADER, JsonObjectHelper.SEND);
             sendObject.put(JsonObjectHelper.SENDER, myEmail);
             sendObject.put(JsonObjectHelper.RECEIVER, email.getText().toString());

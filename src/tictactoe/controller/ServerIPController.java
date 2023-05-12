@@ -52,9 +52,10 @@ public class ServerIPController implements Initializable {
     @FXML
     private void connectHandler(ActionEvent event) throws IOException  {
 
-        
+            Stage stage = (Stage) connectBtn.getScene().getWindow();
             connection = Connection.getInstance();
             connection.setIp(ipTextField.getText());
+            connection.setPrimaryStage(stage);
             if (connection.startConnection()) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/SignInScreen.fxml"));
                 loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -74,7 +75,6 @@ public class ServerIPController implements Initializable {
                 });
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 610, 410);
-                Stage stage = (Stage) connectBtn.getScene().getWindow();
                 stage.setScene(scene);
             }else{
                 new MyAlert(Alert.AlertType.INFORMATION, "please enter valid ip");
