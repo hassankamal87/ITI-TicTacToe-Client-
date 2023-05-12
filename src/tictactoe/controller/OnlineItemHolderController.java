@@ -44,6 +44,7 @@ public class OnlineItemHolderController implements Initializable {
         this.name = player.getName();
         this.playerEmail = player.getEmail();
         this.myEmail = myEmail;
+        System.out.println(playerEmail+"OnlineItemHolderController");
     }
     /**
      * Initializes the controller class.
@@ -69,7 +70,10 @@ public class OnlineItemHolderController implements Initializable {
             new Thread() {
                 public void run() {
                     if (connection.getPrintStream() != null) {
-                        connection.getPrintStream().println(sendObject);     
+                        System.out.println(sendObject.toJSONString());
+                        connection.getPrintStream().println(sendObject);
+                        System.out.println("sender" + myEmail);
+                        
                     } else {
                         System.out.println("error in send invitation");
                     }

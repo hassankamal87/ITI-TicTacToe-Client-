@@ -248,6 +248,7 @@ public class SignInScreenController implements Initializable {
                 }
             }
         });
+        connection.startReceiveInvitation();
     }
 
 }
