@@ -27,5 +27,7 @@ public class JsonObjectHelper {
     public static final String SEND = "send";
     public static final String SENDER = "sender";
     public static final String RECEIVER = "receiver";
+    public static final String INVITATION = "invitation";
+
 
 }
