@@ -61,17 +61,15 @@ public class OnlineItemHolderController implements Initializable {
         System.out.println("invite clicked");
         
         
-        
-            sendObject.put(JsonObjectHelper.HEADER, "send");
-            sendObject.put("sender", myEmail);
-            sendObject.put("receiver", email);
+        sendObject.clear();
+            sendObject.put(JsonObjectHelper.HEADER, JsonObjectHelper.SEND);
+            sendObject.put(JsonObjectHelper.SENDER, myEmail);
+            sendObject.put(JsonObjectHelper.RECEIVER, email.getText().toString());
 
             new Thread() {
                 public void run() {
                     if (connection.getPrintStream() != null) {
-                        connection.getPrintStream().println(sendObject);
-                        System.out.println("donnee");
-                        
+                        connection.getPrintStream().println(sendObject);     
                     } else {
                         System.out.println("error in send invitation");
                     }
