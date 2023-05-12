@@ -13,16 +13,26 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogEvent;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tictactoe.controller.GameScreenController;
+import tictactoe.utility.GameMode;
 import tictactoe.utility.JsonObjectHelper;
 
 /**
@@ -30,7 +40,7 @@ import tictactoe.utility.JsonObjectHelper;
  * @author Mohamed Adel
  */
 public class Connection {
-    
+
     private static Connection instance = null;
     private Socket server = null;
     private DataInputStream dis;
@@ -38,26 +48,35 @@ public class Connection {
     private BufferedReader br;
     Thread clientThread;
     JSONObject serverJson;
-    
+    Stage primaStage;
+
     public String ip;
-    
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    
+
+    Alert alert = new Alert(Alert.AlertType.NONE);
+    ButtonType acceptBtn = new ButtonType("ACCEPT");
+    ButtonType rejectButton = new ButtonType("REJECT");
+
     private Connection() {
-        
+
     }
-    
+
     public static synchronized Connection getInstance() {
         if (instance == null) {
             instance = new Connection();
         }
+
         return instance;
     }
-    
+
     public void setIp(String ip) {
         this.ip = ip;
     }
-    
+
+    public void setPrimaryStage(Stage primaryStage) {
+        alert.getDialogPane().getButtonTypes().addAll(acceptBtn, rejectButton);
+        this.primaStage = primaryStage;
+    }
+
     public boolean startConnection() throws IOException {
         try {
             server = new Socket(ip, 5005);
@@ -72,9 +91,9 @@ public class Connection {
             new MyAlert(Alert.AlertType.ERROR, "please enter valid IP").show();
             return false;
         }
-        
+
     }
-    
+
     public void closeConnection() {
         try {
             if (server != null) {
@@ -86,11 +105,11 @@ public class Connection {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void close() throws IOException {
         server.close();
     }
-    
+
     public boolean isConnected() {
         if (server == null) {
             return false;
@@ -98,19 +117,19 @@ public class Connection {
             return true;
         }
     }
-    
+
     public PrintStream getPrintStream() {
         return ps;
     }
-    
+
     public DataInputStream getDataInputStream() {
         return dis;
     }
-    
+
     public BufferedReader getBufferReader() {
         return br;
     }
-    
+
     public JSONObject readMessage() {
         JSONObject response = null;
         try {
@@ -121,10 +140,10 @@ public class Connection {
             } catch (IOException ex1) {
                 System.out.println("not closed in 129");
             }
-            
+
         } catch (ParseException ex) {
             System.out.println("connection line 133");
-            
+
         } catch (NullPointerException e) {
             System.out.println("connection handler 136");
             Platform.runLater(new Runnable() {
@@ -137,22 +156,22 @@ public class Connection {
             try {
                 closeStreams();
             } catch (IOException ex1) {
-                
+
             }
         }
         System.out.println("line 141 connetion " + response);
         return response;
     }
-    
+
     private void closeStreams() throws IOException {
         System.out.println("streams closed done");
         dis.close();
         ps.close();
         br.close();
     }
-    
+
     public void startReceiveInvitation() {
-        System.err.println("startReceiveInvitation");
+        System.out.println("startReceiveInvitation");
         if (clientThread == null) {
             clientThread = new Thread() {
                 public void run() {
@@ -170,30 +189,57 @@ public class Connection {
                                 case JsonObjectHelper.INVITATION:
                                     //recieve invite server logic
                                     alert.setContentText(serverJson.get(JsonObjectHelper.SENDER).toString() + " Wants to play with you");
+
                                     alert.setTitle("Invitation");
-                                    alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
-                                        @Override
-                                        public void handle(DialogEvent event) {
-                                        }
-                                    });
+                                    alert.getResult();
+
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            alert.showAndWait();
+                                            Optional<ButtonType> result = alert.showAndWait();
+                                            if (result.isPresent() && result.get() == acceptBtn) {
+                                                goToOnlineGameScreen();
+                                            }
                                         }
                                     });
                                     break;
                             }
                         } else {
-                            
+
                             break;
                         }
                     }
                 }
             };
         }
-        
+
         clientThread.start();
     }
-    
+
+    private void goToOnlineGameScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    if (clazz == GameScreenController.class) {
+                        return new GameScreenController(GameMode.online);
+                    } else {
+                        try {
+                            return clazz.newInstance();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            });
+            Parent gameRoot = loader.load();
+            Scene gameScene = new Scene(gameRoot, 610, 410);
+
+            primaStage.setScene(gameScene);
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
