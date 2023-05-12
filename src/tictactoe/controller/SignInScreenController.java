@@ -34,6 +34,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tictactoe.Connection;
+import tictactoe.MyAlert;
 import tictactoe.utility.JsonObjectHelper;
 
 /**
@@ -74,33 +75,7 @@ public class SignInScreenController implements Initializable {
 
     public SignInScreenController() {
         connection = Connection.getInstance();
-        /*new Thread() {
-            @Override
-            public void run() {
-                if (!connection.isConnected()) {
-                    try {
-                        connection.startConnection();
-                    } catch (SocketException ex) {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    alert.setContentText("Sorry, Server Is Closed Right Now, Please Try Again Later");
-                                    alert.showAndWait();
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
-                                    Parent root = loader.load();
-                                    Scene scene = new Scene(root, 610, 410);
-                                    Stage stage = (Stage) backBtn.getScene().getWindow();
-                                    stage.setScene(scene);
-                                } catch (IOException ex1) {
-                                    Logger.getLogger(SignInScreenController.class.getName()).log(Level.SEVERE, null, ex1);
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }.start();*/
+       
     }
 
     @FXML
@@ -150,7 +125,8 @@ public class SignInScreenController implements Initializable {
                                     break;
                             }
                         } catch (IOException ex) {
-                            System.out.println(ex.toString());
+                            
+                            new MyAlert(Alert.AlertType.INFORMATION, "server down");
                             //   Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ParseException ex) {
                             System.out.println(ex.toString());

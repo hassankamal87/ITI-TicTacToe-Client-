@@ -31,7 +31,8 @@ import tictactoe.Connection;
  * @author Mohamed Adel
  */
 public class OnlineFriendListScreenController implements Initializable {
-@FXML
+
+    @FXML
     private ListView<?> listItemHolder;
     ArrayList<Player> players;
     String myEmail;
@@ -47,7 +48,6 @@ public class OnlineFriendListScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
         ArrayList<Node> list = new ArrayList();
 
         for (Player p : players) {
@@ -57,7 +57,7 @@ public class OnlineFriendListScreenController implements Initializable {
                     @Override
                     public Object call(Class<?> clazz) {
                         if (clazz == OnlineItemHolderController.class) {
-                            return new OnlineItemHolderController(p,myEmail);
+                            return new OnlineItemHolderController(p, myEmail);
                         } else {
                             try {
                                 return clazz.newInstance();
@@ -99,6 +99,20 @@ public class OnlineFriendListScreenController implements Initializable {
     private void goBack(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/MainScreenUi.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    if (clazz == MainScreenUiController.class) {
+                        return new MainScreenUiController(players, myEmail);
+                    } else {
+                        try {
+                            return clazz.newInstance();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            });
             Parent root = loader.load();
             Scene scene = new Scene(root, 610, 410);
             Stage stage = (Stage) listItemHolder.getScene().getWindow();
