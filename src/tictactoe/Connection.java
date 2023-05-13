@@ -205,12 +205,14 @@ public class Connection {
                                             Optional<ButtonType> result = alert.showAndWait();
                                             clientJson = new JSONObject();
                                             if (result.isPresent() && result.get() == acceptBtn) {
-                                                goToOnlineGameScreen();
+                                                goToOnlineGameScreen(serverJson.get(JsonObjectHelper.SENDER).toString(),2);
                                                 clientJson.put("header", "accept");
+                                                clientJson.put("myEmail",serverJson.get(JsonObjectHelper.RECEIVER));
                                                 clientJson.put(JsonObjectHelper.EMAIL, serverJson.get(JsonObjectHelper.SENDER).toString());
                                                 ps.println(clientJson);
                                             } else if (result.isPresent() && result.get() == rejectButton) {
                                                 clientJson.put(JsonObjectHelper.HEADER, JsonObjectHelper.REFUSE);
+                                                clientJson.put("myEmail",serverJson.get(JsonObjectHelper.RECEIVER));
                                                 clientJson.put(JsonObjectHelper.EMAIL, serverJson.get(JsonObjectHelper.SENDER).toString());
                                                 ps.println(clientJson);
                                             }
@@ -218,7 +220,7 @@ public class Connection {
                                     });
                                     break;
                                 case "refuse":
-                                    refuseAlert.setContentText(" " + serverJson.get(JsonObjectHelper.EMAIL) + " can't play right now");
+                                    refuseAlert.setContentText(" " + serverJson.get("myEmail") + " can't play right now");
                                     refuseAlert.setTitle("SORRY");
                                     Platform.runLater(new Runnable() {
                                         @Override
@@ -232,7 +234,7 @@ public class Connection {
                                     });
                                     break;
                                 case "accept":
-                                    acceptAlert.setContentText(" " + serverJson.get(JsonObjectHelper.EMAIL) + " Accepted your invitation ");
+                                    acceptAlert.setContentText(" " + serverJson.get("myEmail") + " Accepted your invitation ");
                                     acceptAlert.setTitle("ACCEPTED");
                                     Platform.runLater(new Runnable() {
                                         @Override
@@ -240,7 +242,7 @@ public class Connection {
                                             Optional<ButtonType> result = acceptAlert.showAndWait();
                                             clientJson = new JSONObject();
                                             if (result.isPresent() && result.get() == startBtn) {
-                                                goToOnlineGameScreen();
+                                                goToOnlineGameScreen(serverJson.get("myEmail").toString(),1);
                                             }
                                         }
                                     });
@@ -259,14 +261,14 @@ public class Connection {
         clientThread.start();
     }
 
-    private void goToOnlineGameScreen() {
+    private void goToOnlineGameScreen(String em, int pos) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tictactoe/XML/GameScreen.fxml"));
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
                 public Object call(Class<?> clazz) {
                     if (clazz == GameScreenController.class) {
-                        return new GameScreenController(GameMode.online);
+                        return new GameScreenController(GameMode.online, em, pos);
                     } else {
                         try {
                             return clazz.newInstance();

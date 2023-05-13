@@ -17,13 +17,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +41,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import javax.swing.Timer;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import tictactoe.Connection;
 import tictactoe.Result;
 import tictactoe.utility.GameLevel;
 import tictactoe.utility.GameMode;
@@ -52,7 +59,7 @@ import tictactoe.utility.PlayerSympol;
  *
  * @author AB
  */
-public class GameScreenController implements Initializable {
+public class GameScreenController extends Thread implements Initializable {
 
     @FXML
     private ImageView backGroundImg;
@@ -116,6 +123,11 @@ public class GameScreenController implements Initializable {
     private AnchorPane containerPane;
     private Result result;
 
+    JSONObject clientJson;
+    JSONObject serverJson;
+    String email;
+    int position;
+
     public GameScreenController(GameMode gameMode, String recordedGame) {
         this.gameMode = gameMode;
         this.playerSympol = PlayerSympol.X;
@@ -129,6 +141,13 @@ public class GameScreenController implements Initializable {
 
     }
 
+    public GameScreenController(GameMode gameMode, String email, int pos) {
+        this.gameMode = gameMode;
+        this.email = email;
+        this.position = pos;
+
+    }
+
     public GameScreenController(PlayerSympol playerSympol, GameLevel gameLevel) {
         this.gameMode = GameMode.computer;
         this.playerSympol = playerSympol;
@@ -139,7 +158,6 @@ public class GameScreenController implements Initializable {
     //generated only in result screen controller
     public GameScreenController(Result result) {
         this.result = result;
-        System.out.println(result.toString() + "From Game");
         this.gameMode = result.getMode();
         this.playerSympol = result.getSympol();
         this.gameLevel = result.getLevel();
@@ -150,7 +168,9 @@ public class GameScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        moveString += playerSympol.toString() + "." + gameMode.toString() + ".";
+        if (gameMode != GameMode.online) {
+            moveString += playerSympol.toString() + "." + gameMode.toString() + ".";
+        }
         currentTime = LocalTime.now().toString().replace('.', '_');
         currentTime = currentTime.replace(':', '_');
         currentNumber = 1;
@@ -182,9 +202,82 @@ public class GameScreenController implements Initializable {
         } else if (gameMode == GameMode.multiplayer) {
             multiplayerMode();
         } else if (gameMode == GameMode.online) {
-            System.out.println("online");
+            gameKindTextView.setText("OnLine Game");
+            if (position == 1) {
+                this.playerSympol = PlayerSympol.X;
+                leftName.setText("YOU");
+                rightName.setText(email);
+            } else if (position == 2) {
+                this.playerSympol = PlayerSympol.O;
+                leftName.setText(email);
+                rightName.setText("YOU");
+            }
+            onLineGameMode();
         } else if (gameMode == GameMode.record) {
             recordMode();
+        }
+    }
+
+    private void onLineGameMode() {
+
+        if (playerSympol == PlayerSympol.O) {
+            freezeButton();
+        }
+
+        start();
+
+        for (int i = 0; i < listOfButtons.size(); i++) {
+            Button button = listOfButtons.get(i);
+            listOfButtons.get(i).addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                    clientJson = new JSONObject();
+                    myMove(button);
+                    clientJson.put("header", "move");
+                    clientJson.put("index", listOfButtons.indexOf(button) + "");
+                    clientJson.put("email", email);
+                    Connection.getInstance().getPrintStream().println(clientJson);
+                }
+            });
+        }
+
+    }
+
+    private void myMove(Button btn) {
+        if (btn.getText() == "") {
+            drawOorX(btn, playerSympol);
+            freezeButton();
+            avaiableList.remove(btn);
+            checkWin();
+
+        }
+    }
+
+    @Override
+    public void run() {
+        serverJson = new JSONObject();
+        while (true) {
+            serverJson = readMessage();
+            if (serverJson != null) {
+                String header = serverJson.get("header").toString();
+                switch (header) {
+                    case "move":
+                        System.out.println("we in switch " + serverJson.get("index"));
+                        Button b = listOfButtons.get(Integer.parseInt(serverJson.get("index").toString()));
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                enableButton();
+                                drawOorX(b, playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
+                                avaiableList.remove(b);
+                            }
+                        });
+                        break;
+                }
+            }else{
+                System.out.println("nulllll");
+            }
         }
     }
 
@@ -379,8 +472,7 @@ public class GameScreenController implements Initializable {
             animateResultAndGoToResult();
             return;
         }
-        if (avaiableList.size() == 0 && matchStatus != WIN&&gameMode!= GameMode.record) {
-            System.out.println("draw");
+        if (avaiableList.size() == 0 && matchStatus != WIN && gameMode != GameMode.record) {
             matchStatus = DRAW;
             resultScreen();
         }
@@ -390,6 +482,13 @@ public class GameScreenController implements Initializable {
     private void freezeButton() {
         for (Button button : listOfButtons) {
             button.setDisable(true);
+            button.setStyle("-fx-opacity: 1.0;-fx-background-color:  transparent");
+        }
+    }
+
+    private void enableButton() {
+        for (Button button : listOfButtons) {
+            button.setDisable(false);
             button.setStyle("-fx-opacity: 1.0;-fx-background-color:  transparent");
         }
     }
@@ -410,8 +509,9 @@ public class GameScreenController implements Initializable {
         sequentialTransition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(gameMode != GameMode.record)
-                     resultScreen();
+                if (gameMode != GameMode.record) {
+                    resultScreen();
+                }
             }
         });
         sequentialTransition.play();
@@ -486,12 +586,10 @@ public class GameScreenController implements Initializable {
             if (!video.exists()) {
                 try {
                     if (video.createNewFile()) {
-                        System.out.println("creation Done");
                     } else {
-                        System.out.println("Faild");
                     }
                 } catch (IOException ex) {
-                    System.out.println(ex.toString());
+                    System.out.println("line 596 in gamed Screen");
                     Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -506,7 +604,27 @@ public class GameScreenController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
+        }
 
+    }
+
+    private JSONObject readMessage() {
+        JSONObject newJson = new JSONObject();
+
+        try {
+            System.out.println("before reading");
+            String aaa = Connection.getInstance().getBufferReader().readLine();
+
+            newJson = (JSONObject) new JSONParser().parse(aaa);
+            System.out.println(newJson + " you search   dddd");
+            return newJson;
+        } catch (NullPointerException e) {
+
+        } catch (IOException ex) {
+            System.out.println("IO ECXPTION in 594");
+        } catch (ParseException ex) {
+            System.out.println("parse ECXPTION in 596");
+        }
+        return newJson;
     }
 }
