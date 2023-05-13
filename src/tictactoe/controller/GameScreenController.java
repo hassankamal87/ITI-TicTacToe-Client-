@@ -247,8 +247,8 @@ public class GameScreenController extends Thread implements Initializable {
     private void myMove(Button btn) {
         if (btn.getText() == "") {
             drawOorX(btn, playerSympol);
-            freezeButton();
-            avaiableList.remove(btn);
+            //freezeButton();
+            
             checkWin();
 
         }
@@ -260,22 +260,17 @@ public class GameScreenController extends Thread implements Initializable {
         while (true) {
             serverJson = readMessage();
             if (serverJson != null) {
-                String header = serverJson.get("header").toString();
-                switch (header) {
-                    case "move":
-                        System.out.println("we in switch " + serverJson.get("index"));
-                        Button b = listOfButtons.get(Integer.parseInt(serverJson.get("index").toString()));
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                enableButton();
-                                drawOorX(b, playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
-                                avaiableList.remove(b);
-                            }
-                        });
-                        break;
-                }
-            }else{
+                Button b = listOfButtons.get(Integer.parseInt(serverJson.get("index").toString()));
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableButton();
+                        drawOorX(b, playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
+                       // avaiableList.remove(b);
+                    }
+                });
+                break;
+            } else {
                 System.out.println("nulllll");
             }
         }
@@ -590,7 +585,7 @@ public class GameScreenController extends Thread implements Initializable {
                     }
                 } catch (IOException ex) {
                     System.out.println("line 596 in gamed Screen");
-                    Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                    //       Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             try {
@@ -612,11 +607,9 @@ public class GameScreenController extends Thread implements Initializable {
         JSONObject newJson = new JSONObject();
 
         try {
-            System.out.println("before reading");
             String aaa = Connection.getInstance().getBufferReader().readLine();
 
             newJson = (JSONObject) new JSONParser().parse(aaa);
-            System.out.println(newJson + " you search   dddd");
             return newJson;
         } catch (NullPointerException e) {
 
