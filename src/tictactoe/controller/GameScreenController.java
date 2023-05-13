@@ -123,8 +123,7 @@ public class GameScreenController extends Thread implements Initializable {
     private AnchorPane containerPane;
     private Result result;
 
-    JSONObject clientJson;
-    JSONObject serverJson;
+    
     String email;
     int position;
 
@@ -145,6 +144,7 @@ public class GameScreenController extends Thread implements Initializable {
         this.gameMode = gameMode;
         this.email = email;
         this.position = pos;
+        start();
 
     }
 
@@ -211,6 +211,7 @@ public class GameScreenController extends Thread implements Initializable {
                 this.playerSympol = PlayerSympol.O;
                 leftName.setText(email);
                 rightName.setText("YOU");
+                //freezeButton();
             }
             onLineGameMode();
         } else if (gameMode == GameMode.record) {
@@ -220,19 +221,15 @@ public class GameScreenController extends Thread implements Initializable {
 
     private void onLineGameMode() {
 
-        if (playerSympol == PlayerSympol.O) {
-            freezeButton();
-        }
-
-        start();
-
+        
         for (int i = 0; i < listOfButtons.size(); i++) {
             Button button = listOfButtons.get(i);
             listOfButtons.get(i).addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-
-                    clientJson = new JSONObject();
+                    
+                    JSONObject clientJson = new JSONObject();
+                    clientJson.clear();
                     myMove(button);
                     clientJson.put("header", "move");
                     clientJson.put("index", listOfButtons.indexOf(button) + "");
@@ -241,6 +238,9 @@ public class GameScreenController extends Thread implements Initializable {
                 }
             });
         }
+        
+
+        
 
     }
 
@@ -256,15 +256,18 @@ public class GameScreenController extends Thread implements Initializable {
 
     @Override
     public void run() {
-        serverJson = new JSONObject();
+        JSONObject serverJson = new JSONObject();
+        serverJson.clear();
         while (true) {
             serverJson = readMessage();
+            System.out.println(serverJson.toJSONString() +" server json   cmmcvnmcnvmc,nvsnkdjv");
+            //enableButton();
             if (serverJson != null) {
                 Button b = listOfButtons.get(Integer.parseInt(serverJson.get("index").toString()));
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        enableButton();
+                        System.out.println("drawn from server ");
                         drawOorX(b, playerSympol == PlayerSympol.X ? PlayerSympol.O : PlayerSympol.X);
                        // avaiableList.remove(b);
                     }
