@@ -9,13 +9,16 @@ package tictactoe.controller;
  *
  * @author AB
  */
-class Player {
+class Player{
     private String name;
     private String email;
 
     public Player(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    Player() {
     }
 
     public String getName() {

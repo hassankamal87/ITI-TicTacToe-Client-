@@ -56,8 +56,7 @@ public class MainScreenUiController implements Initializable {
     public MainScreenUiController() {
 
     }
-    public MainScreenUiController(ArrayList<Player> players, String email) {
-        this.players = players;
+    public MainScreenUiController(String email) {
         this.email = email;
     }
 
@@ -181,7 +180,7 @@ public class MainScreenUiController implements Initializable {
             @Override
             public Object call(Class<?> clazz) {
                 if (clazz == OnlineFriendListScreenController.class) {
-                    return new OnlineFriendListScreenController(players,email);
+                    return new OnlineFriendListScreenController(email);
                 } else {
                     try {
                         return clazz.newInstance();

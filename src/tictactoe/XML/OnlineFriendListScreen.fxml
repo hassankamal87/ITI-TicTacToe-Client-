@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.202" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.OnlineFriendListScreenController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.controller.OnlineFriendListScreenController">
    <children>
       <ImageView fitHeight="410.0" fitWidth="610.0" pickOnBounds="true">
          <image>
@@ -25,5 +25,10 @@
          </image>
       </ImageView>
       <ListView fx:id="listItemHolder" layoutX="81.0" layoutY="63.0" prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent;" />
+      <ImageView blendMode="DARKEN" fitHeight="37.0" fitWidth="41.0" layoutX="542.0" layoutY="20.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/refresh.gif" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
