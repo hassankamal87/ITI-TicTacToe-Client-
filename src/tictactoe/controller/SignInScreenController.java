@@ -69,6 +69,8 @@ public class SignInScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Players = new ArrayList<Player>();
+        userNameTextField.setText("mohamedadel2323m@gmail.com");
+        passwordTextField.setText("111111111");
     }
 
     
@@ -98,26 +100,26 @@ public class SignInScreenController implements Initializable {
 
                             switch (jsonRespone.get(JsonObjectHelper.SIGNIN_STATUS).toString()) {
                                 case JsonObjectHelper.SIGNIN_SUCCESS:
-                                    while (thereIsPlayers) {
-
-                                        jsonOnlineListPlayer = (JSONObject) new JSONParser().parse(connection.getBufferReader().readLine());
-                                        if (jsonOnlineListPlayer != null) {
-                                            switch (jsonOnlineListPlayer.get(JsonObjectHelper.HEADER).toString()) {
-                                                case "list":
-                                                    //System.out.println(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString() + "   in switch");
-                                                    
-                                                     Player onLinePlayer = new Player(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString(), jsonOnlineListPlayer.get(JsonObjectHelper.EMAIL).toString());
-                                                    if(onLinePlayer.getEmail().equals(email) == false)
-                                                        Players.add(onLinePlayer);
-
-                                                    break;
-                                                case "end":
-                                                    System.out.println("end");
-                                                    thereIsPlayers = false;
-                                                    break;
-                                            }
-                                        }
-                                    }
+//                                    while (thereIsPlayers) {
+//
+//                                        jsonOnlineListPlayer = (JSONObject) new JSONParser().parse(connection.getBufferReader().readLine());
+//                                        if (jsonOnlineListPlayer != null) {
+//                                            switch (jsonOnlineListPlayer.get(JsonObjectHelper.HEADER).toString()) {
+//                                                case "list":
+//                                                    //System.out.println(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString() + "   in switch");
+//                                                    
+//                                                     Player onLinePlayer = new Player(jsonOnlineListPlayer.get(JsonObjectHelper.NAME).toString(), jsonOnlineListPlayer.get(JsonObjectHelper.EMAIL).toString());
+//                                                    if(onLinePlayer.getEmail().equals(email) == false)
+//                                                        Players.add(onLinePlayer);
+//
+//                                                    break;
+//                                                case "end":
+//                                                    System.out.println("end");
+//                                                    thereIsPlayers = false;
+//                                                    break;
+//                                            }
+//                                        }
+//                                    }
                                     goToOnlineList();
                                     break;
                                 case JsonObjectHelper.SIGNIN_FAIL:
@@ -125,8 +127,7 @@ public class SignInScreenController implements Initializable {
                                     break;
                             }
                         } catch (IOException ex) {
-                            
-                            new MyAlert(Alert.AlertType.INFORMATION, "server down");
+ 
                             //   Logger.getLogger(SignUPScreenController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ParseException ex) {
                             System.out.println(ex.toString());
@@ -219,7 +220,7 @@ public class SignInScreenController implements Initializable {
             @Override
             public Object call(Class<?> clazz) {
                 if (clazz == OnlineFriendListScreenController.class) {
-                    return new OnlineFriendListScreenController(Players,email);
+                    return new OnlineFriendListScreenController(email);
                 } else {
                     try {
                         return clazz.newInstance();

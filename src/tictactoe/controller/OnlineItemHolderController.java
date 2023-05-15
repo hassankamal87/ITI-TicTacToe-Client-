@@ -44,7 +44,6 @@ public class OnlineItemHolderController implements Initializable {
         this.name = player.getName();
         this.playerEmail = player.getEmail();
         this.myEmail = myEmail;
-        System.out.println(playerEmail+"OnlineItemHolderController");
     }
     /**
      * Initializes the controller class.

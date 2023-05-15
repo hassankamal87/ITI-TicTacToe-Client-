@@ -47,6 +47,7 @@ public class ServerIPController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ipTextField.setText("127.0.0.1");
     }
 
     @FXML
